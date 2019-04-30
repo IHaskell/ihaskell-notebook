@@ -1,0 +1,24 @@
+# Stack global default project global-project/stack.yaml for the Minimum JupyterLab
+# https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration
+
+packages:
+- location: /opt/IHaskell
+  subdirs:
+  - .
+  - ./ipython-kernel
+  - ./ghc-parser
+  - ./ihaskell-display/ihaskell-aeson
+  - ./ihaskell-display/ihaskell-blaze
+  - ./ihaskell-display/ihaskell-charts
+  - ./ihaskell-display/ihaskell-diagrams
+  - ./ihaskell-display/ihaskell-gnuplot
+  - ./ihaskell-display/ihaskell-hatex
+  - ./ihaskell-display/ihaskell-juicypixels
+  - ./ihaskell-display/ihaskell-magic
+  - ./ihaskell-display/ihaskell-plot
+  - ./ihaskell-display/ihaskell-static-canvas
+  - ./ihaskell-display/ihaskell-widgets
+- location: /opt/hvega
+  subdirs:
+  - ./hvega
+  - ./ihaskell-hvega

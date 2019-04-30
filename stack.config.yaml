@@ -1,0 +1,12 @@
+# Haskell Stack non-project-specific config for IHaskell in the minimum JupyterLab.
+# https://docs.haskellstack.org/en/stable/yaml_configuration/#non-project-specific-config
+
+# So that all users, not just jovyan, can use the Stack default global project.
+allow-different-user: true
+
+# stack install products will go here, not in /home/$USER/.local/bin
+local-bin-path: /opt/bin
+
+# We're going to be loosey with version bounds.
+allow-newer: true
+
