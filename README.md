@@ -1,5 +1,7 @@
 # ihaskell-notebook
 
+[![Build Status](https://travis-ci.org/jamesdbrock/ihaskell-notebook.svg?branch=master)](https://travis-ci.org/jamesdbrock/ihaskell-notebook)
+
 A community maintained
 [Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks)
 image.
