@@ -21,9 +21,9 @@ This image includes:
 * Haskell libraries for instances of [IHaskell.Display](https://www.stackage.org/haddock/lts-12.26/ihaskell-0.9.1.0/IHaskell-Display.html)
   * __IHaskell/ihaskell-display/ihaskell-aeson__ for [Aeson](http://hackage.haskell.org/package/aeson) JSON.
   * __IHaskell/ihaskell-display/ihaskell-blaze__ for [Blaze](http://hackage.haskell.org/package/blaze-html) HTML.
-  * __IHaskell/ihaskell-display/ihaskell-gnuplot__ For [gnuplot](http://www.gnuplot.info/).
-  * __IHaskell/ihaskell-display/ihaskell-juicypixels__ For [JuicyPixels](http://hackage.haskell.org/package/JuicyPixels) image serialization.
-  * [__IHaskell/ihaskell-display/ihaskell-widgets__](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display/ihaskell-widgets) For [ipython widgets](https://github.com/ipython/ipywidgets).
+  * __IHaskell/ihaskell-display/ihaskell-gnuplot__ for [gnuplot](http://www.gnuplot.info/).
+  * __IHaskell/ihaskell-display/ihaskell-juicypixels__ for [JuicyPixels](http://hackage.haskell.org/package/JuicyPixels) image serialization.
+  * [__IHaskell/ihaskell-display/ihaskell-widgets__](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display/ihaskell-widgets) for [ipython widgets](https://github.com/ipython/ipywidgets).
   * [__DougBurke/ihaskell-hvega__](https://github.com/DougBurke/hvega) for [Vega/Vega-Lite rendering, natively supported by JupyterLab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html#vega-lite).
 
 To ensure that this image composes well with any authentication and storage configuration 
