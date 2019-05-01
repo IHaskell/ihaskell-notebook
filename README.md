@@ -26,8 +26,10 @@ This image includes:
   * [__IHaskell/ihaskell-display/ihaskell-widgets__](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display/ihaskell-widgets) For [ipython widgets](https://github.com/ipython/ipywidgets).
   * [__DougBurke/ihaskell-hvega__](https://github.com/DougBurke/hvega) for [Vega/Vega-Lite rendering, natively supported by JupyterLab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html#vega-lite).
 
-To ensure that this image composes well with any authentication and storage configuration (for example [SystemUserSpawner](https://github.com/jupyterhub/dockerspawner#systemuserspawner)), we try to avoid installing anything
-locally in `/home/jovyan`. Instead, all Haskell is installed at the level
+To ensure that this image composes well with any authentication and storage configuration 
+(for example [SystemUserSpawner](https://github.com/jupyterhub/dockerspawner#systemuserspawner)) 
+or notebook directory structure, we try to avoid installing anything locally in `/home/jovyan`. 
+Instead, all Haskell is installed at the level
 of the Stack *global project*. The Stack *global project* `resolver`
 is determined by the IHaskell project `resolver`, and all included Haskell
 libraries are built using that stack `resolver`.
@@ -40,8 +42,8 @@ Example notebooks are collected together in the container at `/home/jovyan/ihask
 
 The `ihaskell` executable, the `ihaskell` library, the `ghc-parser` library,
 and the `ipython-kernel` library are built and installed at the level
-of the [Stack *global project*](https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration). This means that the `ihaskell`
-environment is available for all users anywhere for any `PWD` inside the
+of the [Stack *global project*](https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration).
+This means that the `ihaskell` environment is available for all users anywhere for any `PWD` inside the
 container. (The `PWD` of a notebook is the always the directory in which the notebook is saved.)
 
 You can install libraries with `stack install`. For example, if you encounter a notebook error like:
@@ -64,7 +66,7 @@ Or, in a notebook, you can use the GHCi-style shell commands:
 > :!stack install deque
 > ~~~
 
-And then ↻ restart your Jupyter Haskell kernel.
+And then <kbd>↻</kbd> restart your Jupyter Haskell kernel.
 
 You can use this technique to create a list of package dependencies at the top of a notebook:
 
@@ -78,7 +80,7 @@ You can use this technique to create a list of package dependencies at the top o
 > Just 1
 > ~~~
 
-Sadly, this doesn't work quite as frictionlessly as we would like. The first time you run the notebook, the packages will be installed, but then the kernel will fail to find them. You must ↻ restart the kernel and then run the notebook again, and it will succeed.
+Sadly, this doesn't work quite as frictionlessly as we would like. The first time you run the notebook, the packages will be installed, but then the kernel will fail to find them. You must <kbd>↻</kbd> restart the kernel and then run the notebook again, and it will succeed.
 
 ## [IHaskell.Display](https://www.stackage.org/haddock/lts-12.26/ihaskell-0.9.1.0/IHaskell-Display.html)
 
