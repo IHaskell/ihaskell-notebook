@@ -40,7 +40,7 @@ Example notebooks are collected together in the container at `/home/jovyan/ihask
 
 The `ihaskell` executable, the `ihaskell` library, the `ghc-parser` library,
 and the `ipython-kernel` library are built and installed at the level
-of the [Stack global project*](https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration). This means that the `ihaskell`
+of the [Stack *global project*](https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration). This means that the `ihaskell`
 environment is available for all users anywhere for any `PWD` inside the
 container. (The `PWD` of a notebook is the always the directory in which the notebook is saved.)
 
@@ -109,7 +109,7 @@ stack exec ghc-pkg -- list | grep ihaskell
 You can run a IHaskell `.ipynb` in a stack project `PWD` which has a `stack.yaml`.
 
 You should
-copy the the contents of the container's Stack *global project* `/opt/stack/global-project/stack.yaml` into the local project's `stack.yaml`. That will give you the same `resolver` as the global IHaskell installation, and it will also allow you to install libraries from `IHaskell` and `IHaskell/ihaskell-display`.
+copy the the contents of the container's Stack *global project* `/opt/stack/global-project/stack.yaml` into the local project's `stack.yaml`. That will give you the same `resolver` as the *global project* IHaskell installation, and it will also allow you to install libraries from `IHaskell` and `IHaskell/ihaskell-display`.
 
 After your `stack.yaml` is configured, run `:! stack build` and then ↻ restart your Jupyter Haskell kernel.
 
