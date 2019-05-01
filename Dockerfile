@@ -32,17 +32,13 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
         libmagic-dev \
         libblas-dev \
         liblapack-dev \
-        g++ \
-        gcc \
-        libc6-dev \
         libffi-dev \
         libgmp-dev \
-        make \
-        xz-utils \
-        zlib1g-dev \
-        git \
         gnupg \
         netbase \
+        # for ihaskell-graphviz \
+        graphviz \
+        # for stack installation \
         curl \
         && \
     rm -rf /var/lib/apt/lists/* && \
@@ -55,7 +51,7 @@ RUN mkdir -p /etc/stack
 COPY stack.config.yaml /etc/stack/config.yaml
 RUN fix-permissions /etc/stack
 
-# Stack global default project stack.stack.yaml
+# Stack global project stack.stack.yaml
 # https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration
 RUN mkdir -p $STACK_ROOT/global-project
 COPY stack.stack.yaml $STACK_ROOT/global-project/stack.yaml
@@ -85,18 +81,19 @@ RUN \
     cd /opt && \
     git clone --depth 1 --branch $IHASKELL_COMMIT https://github.com/gibiansky/IHaskell && \
     git clone --depth 1 --branch $HVEGA_COMMIT https://github.com/DougBurke/hvega.git && \
-    # Copy the Stack global default project resolver from the IHaskell resolver. \
+    # Copy the Stack global project resolver from the IHaskell resolver. \
     grep 'resolver:' /opt/IHaskell/stack.yaml >> $STACK_ROOT/global-project/stack.yaml && \
     # Note that we are NOT in the /opt/IHaskell directory here, we are installing ihaskell via the /opt/stack/global-project/stack.yaml \
     stack install ihaskell && \
-    stack install ghc-parser && \
-    stack install ipython-kernel && \
+    stack build ghc-parser && \
+    stack build ipython-kernel && \
     # Install IHaskell.Display libraries https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display \
-    stack install ihaskell-aeson && \
-    stack install ihaskell-blaze && \
-    stack install ihaskell-gnuplot && \
-    stack install ihaskell-juicypixels && \
-    stack install ihaskell-widgets && \
+    stack build ihaskell-aeson && \
+    stack build ihaskell-blaze && \
+    stack build ihaskell-gnuplot && \
+    stack build ihaskell-juicypixels && \
+    stack build ihaskell-widgets && \
+    stack build ihaskell-graphviz && \
     stack build hvega && \
     stack build ihaskell-hvega && \
     fix-permissions /opt/IHaskell && \
@@ -114,7 +111,7 @@ RUN \
     npm cache clean --force && \
     rm -rf /home/$NB_USER/.cache/yarn && \
     # IHaskell/.stack-work, 120MB \
-    # We can't clean /opt/IHaskell/.stack-work because it's referenced by the global default project. \
+    # We can't clean /opt/IHaskell/.stack-work because it's referenced by the global project. \
     # Clean ghc html docs, 259MB \
     rm -rf $(stack path --snapshot-doc-root)/* && \
     # Clean ihaskell_labextensions/node_nodemodules, 86MB \
