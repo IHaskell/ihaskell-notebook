@@ -26,9 +26,9 @@ This image includes:
   * [__IHaskell/ihaskell-display/ihaskell-widgets__](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display/ihaskell-widgets) For [ipython widgets](https://github.com/ipython/ipywidgets).
   * [__DougBurke/ihaskell-hvega__](https://github.com/DougBurke/hvega) for [Vega/Vega-Lite rendering, natively supported by JupyterLab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html#vega-lite).
 
-With this Docker image, we try to avoid installing anything
+To ensure that this image composes well with any authentication and storage configuration (for example [SystemUserSpawner](https://github.com/jupyterhub/dockerspawner#systemuserspawner), we try to avoid installing anything
 locally in `/home/jovyan`. Instead, all Haskell is installed at the level
-of the Stack default global project. The Stack default global project `resolver`
+of the Stack *global project*. The Stack *global project* `resolver`
 is determined by the IHaskell project `resolver`, and all included Haskell
 libraries are built using that stack `resolver`.
 
@@ -36,11 +36,11 @@ This image is made with JupyterLab in mind, but it works well for classic notebo
 
 Example notebooks are collected together in the container at `/home/jovyan/ihaskell_examples`.
 
-## Stack default global project `/opt/stack/global-project/stack.yaml`
+## Stack *global project* `/opt/stack/global-project/stack.yaml`
 
 The `ihaskell` executable, the `ihaskell` library, the `ghc-parser` library,
 and the `ipython-kernel` library are built and installed at the level
-of the [Stack default global project](https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration). This means that the `ihaskell`
+of the [Stack global project*](https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration). This means that the `ihaskell`
 environment is available for all users anywhere for any `PWD` inside the
 container. (The `PWD` of a notebook is the always the directory in which the notebook is saved.)
 
@@ -89,7 +89,7 @@ are pre-installed in the JupyterLab container, if they appeared to be working at
 stack install ihaskell-diagrams
 ~~~
 
-See the Stack global default project `/opt/stack/global-project/stack.yaml` for information about the `/opt/IHaskell` source in the container.
+See the Stack *global project* `/opt/stack/global-project/stack.yaml` for information about the `/opt/IHaskell` source in the container.
 
 You can see which libraries are installed by running `ghc-pkg`:
 
@@ -109,7 +109,7 @@ stack exec ghc-pkg -- list | grep ihaskell
 You can run a IHaskell `.ipynb` in a stack project `PWD` which has a `stack.yaml`.
 
 You should
-copy the the contents of the container's Stack global default project `/opt/stack/global-project/stack.yaml` into the local project's `stack.yaml`. That will give you the same `resolver` as the global IHaskell installation, and it will also allow you to install libraries from `IHaskell` and `IHaskell/ihaskell-display`.
+copy the the contents of the container's Stack *global project* `/opt/stack/global-project/stack.yaml` into the local project's `stack.yaml`. That will give you the same `resolver` as the global IHaskell installation, and it will also allow you to install libraries from `IHaskell` and `IHaskell/ihaskell-display`.
 
 After your `stack.yaml` is configured, run `:! stack build` and then ↻ restart your Jupyter Haskell kernel.
 
