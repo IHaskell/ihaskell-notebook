@@ -66,7 +66,7 @@ Or, in a notebook, you can use the GHCi-style shell commands:
 > :!stack install deque
 > ~~~
 
-And then <kbd>↻</kbd> restart your Jupyter Haskell kernel.
+And then <kbd>↻</kbd> restart your IHaskell kernel.
 
 You can use this technique to create a list of package dependencies at the top of a notebook:
 
@@ -113,7 +113,7 @@ You can run a IHaskell `.ipynb` in a stack project `PWD` which has a `stack.yaml
 You should
 copy the the contents of the container's Stack *global project* `/opt/stack/global-project/stack.yaml` into the local project's `stack.yaml`. That will give you the same `resolver` as the *global project* IHaskell installation, and it will also allow you to install libraries from `IHaskell` and `IHaskell/ihaskell-display`.
 
-After your `stack.yaml` is configured, run `:! stack build` and then ↻ restart your Jupyter Haskell kernel.
+After your `stack.yaml` is configured, run `:! stack build` and then <kbd>↻</kbd> restart your IHaskell kernel.
 
 You can try to run a IHaskell `.ipynb` in a `PWD` with a `stack.yaml` that has a `resolver` different from the `resolver` in `/opt/stack/global-project/stack.yaml`, but that is Undefined Behavior, as we say in C++.
 
