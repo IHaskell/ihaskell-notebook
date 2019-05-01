@@ -116,7 +116,7 @@ After your `stack.yaml` is configured, run `:! stack build` and then ↻ restart
 You can try to run a IHaskell `.ipynb` in a `PWD` with a `stack.yaml` that has a `resolver` different from the `resolver` in `/opt/stack/global-project/stack.yaml`, but that is Undefined Behavior, as we say in C++.
 
 
-## References and Links
+## References, Links, Credits
 
 [IHaskell on Hackage](http://hackage.haskell.org/package/ihaskell)
 
@@ -124,7 +124,7 @@ You can try to run a IHaskell `.ipynb` in a `PWD` with a `stack.yaml` that has a
 
 [IHaskell Wiki with Exemplary IHaskell Notebooks](https://github.com/gibiansky/IHaskell/wiki)
 
-[When Is Haskell More Useful Than R Or Python In Data Science?](https://www.quora.com/What-are-some-use-cases-for-which-it-would-be-beneficial-to-use-Haskell-rather-than-R-or-Python-in-data-science)
+[When Is Haskell More Useful Than R Or Python In Data Science?](https://www.quora.com/What-are-some-use-cases-for-which-it-would-be-beneficial-to-use-Haskell-rather-than-R-or-Python-in-data-science) by [Tikhon Jelvis](https://github.com/TikhonJelvis)
 
 [datahaskell.org](http://www.datahaskell.org/)
 
