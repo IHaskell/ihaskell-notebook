@@ -26,7 +26,7 @@ This image includes:
   * [__IHaskell/ihaskell-display/ihaskell-widgets__](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display/ihaskell-widgets) For [ipython widgets](https://github.com/ipython/ipywidgets).
   * [__DougBurke/ihaskell-hvega__](https://github.com/DougBurke/hvega) for [Vega/Vega-Lite rendering, natively supported by JupyterLab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html#vega-lite).
 
-To ensure that this image composes well with any authentication and storage configuration (for example [SystemUserSpawner](https://github.com/jupyterhub/dockerspawner#systemuserspawner), we try to avoid installing anything
+To ensure that this image composes well with any authentication and storage configuration (for example [SystemUserSpawner](https://github.com/jupyterhub/dockerspawner#systemuserspawner)), we try to avoid installing anything
 locally in `/home/jovyan`. Instead, all Haskell is installed at the level
 of the Stack *global project*. The Stack *global project* `resolver`
 is determined by the IHaskell project `resolver`, and all included Haskell
