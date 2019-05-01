@@ -7,7 +7,7 @@ Provides the Jupyter [IHaskell](https://github.com/gibiansky/IHaskell) kernel
 in a Docker image which composes well with other Jupyter Docker Stacks.
 
 
-`docker run` it right now, then open <http://localhost:8888?token=x>.
+`docker run` it right now with this shell command, then open <http://localhost:8888?token=x>.
 
 ~~~bash
     docker run --rm -p 8888:8888 --env JUPYTER_ENABLE_LAB=yes --env JUPYTER_TOKEN=x --name ihaskell_notebook jamesbrock/ihaskell-notebook:latest
@@ -15,15 +15,16 @@ in a Docker image which composes well with other Jupyter Docker Stacks.
 
 This image includes:
 
-* [IHaskell](https://github.com/gibiansky/IHaskell) Jupyter kernel
-* [ihaskell_labextension](https://github.com/gibiansky/IHaskell/tree/master/ihaskell_labextension) JupyterLab extension for Haskell syntax highlighting in notebooks
+* [__Haskell Stack__](https://docs.haskellstack.org/en/stable/README/) package manager, with [Glasgow Haskell Compiler](https://www.haskell.org/ghc/).
+* [__IHaskell__](https://github.com/gibiansky/IHaskell) Jupyter kernel
+* [__ihaskell_labextension__](https://github.com/gibiansky/IHaskell/tree/master/ihaskell_labextension) JupyterLab extension for Haskell syntax highlighting in notebooks
 * Haskell libraries for instances of [IHaskell.Display](https://www.stackage.org/haddock/lts-12.26/ihaskell-0.9.1.0/IHaskell-Display.html)
-  * IHaskell/ihaskell-display/ihaskell-aeson For [Aeson](http://hackage.haskell.org/package/aeson) JSON.
-  * IHaskell/ihaskell-display/ihaskell-blaze For [Blaze](http://hackage.haskell.org/package/blaze-html) HTML.
-  * IHaskell/ihaskell-display/ihaskell-gnuplot For [gnuplot](http://www.gnuplot.info/).
-  * IHaskell/ihaskell-display/ihaskell-juicypixels For [JuicyPixels](http://hackage.haskell.org/package/JuicyPixels) image serialization.
-  * [IHaskell/ihaskell-display/ihaskell-widgets](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display/ihaskell-widgets) For [ipython widgets](https://github.com/ipython/ipywidgets).
-  * [DougBurke/ihaskell-hvega](https://github.com/DougBurke/hvega) for [Vega/Vega-Lite rendering, natively supported by JupyterLab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html#vega-lite).
+  * __IHaskell/ihaskell-display/ihaskell-aeson__ for [Aeson](http://hackage.haskell.org/package/aeson) JSON.
+  * __IHaskell/ihaskell-display/ihaskell-blaze__ for [Blaze](http://hackage.haskell.org/package/blaze-html) HTML.
+  * __IHaskell/ihaskell-display/ihaskell-gnuplot__ For [gnuplot](http://www.gnuplot.info/).
+  * __IHaskell/ihaskell-display/ihaskell-juicypixels__ For [JuicyPixels](http://hackage.haskell.org/package/JuicyPixels) image serialization.
+  * [__IHaskell/ihaskell-display/ihaskell-widgets__](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display/ihaskell-widgets) For [ipython widgets](https://github.com/ipython/ipywidgets).
+  * [__DougBurke/ihaskell-hvega__](https://github.com/DougBurke/hvega) for [Vega/Vega-Lite rendering, natively supported by JupyterLab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html#vega-lite).
 
 With this Docker image, we try to avoid installing anything
 locally in `/home/jovyan`. Instead, all Haskell is installed at the level
@@ -33,10 +34,7 @@ libraries are built using that stack `resolver`.
 
 This image is made with JupyterLab in mind, but it works well for classic notebooks.
 
-## Examples
-
-The example notebooks are collected together in the container at `/home/jovyan/ihaskell_examples`.
-
+Example notebooks are collected together in the container at `/home/jovyan/ihaskell_examples`.
 
 ## Stack default global project `/opt/stack/global-project/stack.yaml`
 
@@ -56,9 +54,9 @@ You can install libraries with `stack install`. For example, if you encounter a 
 
 Then you can install the missing package from the terminal in your container:
 
-~~
+~~~bash
 stack install deque
-~~
+~~~
 
 Or, in a notebook, you can use the GHCi-style shell commands:
 
