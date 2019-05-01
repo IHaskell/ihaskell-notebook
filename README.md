@@ -2,38 +2,43 @@
 
 A community maintained
 [Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks)
-image which
-provides the Jupyter [IHaskell](https://github.com/gibiansky/IHaskell) kernel
+image.
+Provides the Jupyter [IHaskell](https://github.com/gibiansky/IHaskell) kernel
 in a Docker image which composes well with other Jupyter Docker Stacks.
 
-Includes installation of most of the 
 
+`docker run` it right now, then open <http://localhost:8888?token=x>.
 
-With this IHaskell installation, we avoid putting anything in /home/jovyan.
+~~~bash
+    docker run --rm -p 8888:8888 --env JUPYTER_ENABLE_LAB=yes --env JUPYTER_TOKEN=x --name ihaskell_notebook jamesbrock/ihaskell-notebook:latest
+~~~
 
-The ihaskell executable, the ihaskell library, the ghc-parser library,
-and the ipython-kernel library are built and installed at the level
-of the Stack Default Global Project. This means that the ihaskell
-environment is available for all users for any PWD inside the
-container.
+This image includes:
 
-See https://github.com/gibiansky/IHaskell/issues/715
+* [IHaskell](https://github.com/gibiansky/IHaskell) Jupyter kernel
+* [ihaskell_labextension](https://github.com/gibiansky/IHaskell/tree/master/ihaskell_labextension) JupyterLab extension for Haskell syntax highlighting in notebooks
+* Haskell libraries for instances of [IHaskell.Display](https://www.stackage.org/haddock/lts-12.26/ihaskell-0.9.1.0/IHaskell-Display.html)
+  * IHaskell/ihaskell-display/ihaskell-aeson For [Aeson](http://hackage.haskell.org/package/aeson) JSON.
+  * IHaskell/ihaskell-display/ihaskell-blaze For [Blaze](http://hackage.haskell.org/package/blaze-html) HTML.
+  * IHaskell/ihaskell-display/ihaskell-gnuplot For [gnuplot](http://www.gnuplot.info/).
+  * IHaskell/ihaskell-display/ihaskell-juicypixels For [JuicyPixels](http://hackage.haskell.org/package/JuicyPixels) image serialization.
+  * [IHaskell/ihaskell-display/ihaskell-widgets](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display/ihaskell-widgets) For [ipython widgets](https://github.com/ipython/ipywidgets).
+  * [DougBurke/ihaskell-hvega](https://github.com/DougBurke/hvega) for [Vega/Vega-Lite rendering, natively supported by JupyterLab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html#vega-lite).
 
-When setting up a new Jupyter notebook stack project, it's probably
-a good idea to copy /opt/stack/global-project/stack.yaml
-See also /opt/IHaskell/stack.yaml
+With this Docker image, we try to avoid installing anything
+locally in `/home/jovyan`. Instead, all Haskell is installed at the level
+of the Stack default global project. The Stack default global project `resolver`
+is determined by the IHaskell project `resolver`, and all included Haskell
+libraries are built using that stack `resolver`.
 
-
-
-
+This image is made with JupyterLab in mind, but it works well for classic notebooks.
 
 ## Examples
 
-The example notebooks are collected together in the JupyterLab container at `/home/jovyan/ihaskell_examples`.
+The example notebooks are collected together in the container at `/home/jovyan/ihaskell_examples`.
 
-## Dependencies
 
-### Stack default global project `/opt/stack/global-project/stack.yaml`
+## Stack default global project `/opt/stack/global-project/stack.yaml`
 
 The `ihaskell` executable, the `ihaskell` library, the `ghc-parser` library,
 and the `ipython-kernel` library are built and installed at the level
@@ -49,7 +54,7 @@ You can install libraries with `stack install`. For example, if you encounter a 
 >    Use -v to see a list of the files searched for.
 > ~~~
 
-Then you can install the missing package from the terminal in your JupyterLab container:
+Then you can install the missing package from the terminal in your container:
 
 ~~
 stack install deque
@@ -77,20 +82,20 @@ You can use this technique to create a list of package dependencies at the top o
 
 Sadly, this doesn't work quite as frictionlessly as we would like. The first time you run the notebook, the packages will be installed, but then the kernel will fail to find them. You must ↻ restart the kernel and then run the notebook again, and it will succeed.
 
-#### [IHaskell.Display](https://www.stackage.org/haddock/lts-12.26/ihaskell-0.9.1.0/IHaskell-Display.html)
+## [IHaskell.Display](https://www.stackage.org/haddock/lts-12.26/ihaskell-0.9.1.0/IHaskell-Display.html)
 
 Some libraries in [`IHaskell/ihaskell-display`](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display)
 are pre-installed in the JupyterLab container, if they appeared to be working at the time the JupyterLab Docker image was built. You can try to install the other `IHaskell/ihaskell-display` libraries, and they will be built from the `/opt/IHaskell` source in the container.
 
-```
+~~~bash
 stack install ihaskell-diagrams
-```
+~~~
 
 See the Stack global default project `/opt/stack/global-project/stack.yaml` for information about the `/opt/IHaskell` source in the container.
 
 You can see which libraries are installed by running `ghc-pkg`:
 
-```
+~~~bash
 stack exec ghc-pkg -- list | grep ihaskell
     ihaskell-0.9.1.0
     ihaskell-aeson-0.3.0.1
@@ -99,9 +104,9 @@ stack exec ghc-pkg -- list | grep ihaskell
     ihaskell-hvega-0.2.0.0
     ihaskell-juicypixels-1.1.0.1
     ihaskell-widgets-0.2.3.2
-```
+~~~
 
-#### Local Stack Projects
+## Local Stack Projects
 
 You can run a IHaskell `.ipynb` in a stack project `PWD` which has a `stack.yaml`.
 
@@ -110,16 +115,19 @@ copy the the contents of the container's Stack global default project `/opt/stac
 
 After your `stack.yaml` is configured, run `:! stack build` and then ↻ restart your Jupyter Haskell kernel.
 
-If you want to run an IHaskell `.ipynb` in a `PWD` with a `stack.yaml` that has a `resolver` different from the `resolver` in `/opt/stack/global-project/stack.yaml` then that is Undefined Behavior, as they say in C++. Maybe it will work, maybe not.
+You can try to run a IHaskell `.ipynb` in a `PWD` with a `stack.yaml` that has a `resolver` different from the `resolver` in `/opt/stack/global-project/stack.yaml`, but that is Undefined Behavior, as we say in C++.
 
 
-References
-
+## References and Links
 
 [IHaskell on Hackage](http://hackage.haskell.org/package/ihaskell)
+
 [IHaskell on Stackage](https://www.stackage.org/package/ihaskell/snapshots)
 
 [IHaskell Wiki with Exemplary IHaskell Notebooks](https://github.com/gibiansky/IHaskell/wiki)
 
 [When Is Haskell More Useful Than R Or Python In Data Science?](https://www.quora.com/What-are-some-use-cases-for-which-it-would-be-beneficial-to-use-Haskell-rather-than-R-or-Python-in-data-science)
 
+[datahaskell.org](http://www.datahaskell.org/)
+
+This Docker image was made for use by, and with the support of, [Cross Compass](https://www.cross-compass.com/) in Tokyo.

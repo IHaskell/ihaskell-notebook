@@ -1,7 +1,7 @@
 .PHONY: help build dev test test-env
 
 # Docker image name and tag
-IMAGE:=my-project/ihaskell-notebook
+IMAGE:=jamesbrock/ihaskell-notebook
 TAG?=latest
 # Shell that make should use
 SHELL:=bash
@@ -25,3 +25,8 @@ test: ## Make a test run against the latest image
 
 test-env: ## Make a test environment by installing test dependencies with pip
 	pip install -r requirements-test.txt
+
+.PHONY: runtest
+runtest:
+	docker run --rm -p 8888:8888 -env JUPYTER_ENABLE_LAB=yes --env JUPYTER_TOKEN=x --name ihaskell_notebook $(IMAGE):$(TAG)
+
