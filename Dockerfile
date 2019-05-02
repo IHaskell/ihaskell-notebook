@@ -14,6 +14,9 @@ ARG IHASKELL_COMMIT=master
 # Specify a git commit for hvega
 ARG HVEGA_COMMIT=master
 
+# Extra arguments to `stack build`. Used to build --fast, see Makefile.
+ARG STACK_ARGS=
+
 USER root
 
 # The global snapshot package database will be here in the STACK_ROOT.
@@ -84,23 +87,23 @@ RUN \
     # Copy the Stack global project resolver from the IHaskell resolver. \
     grep 'resolver:' /opt/IHaskell/stack.yaml >> $STACK_ROOT/global-project/stack.yaml && \
     # Note that we are NOT in the /opt/IHaskell directory here, we are installing ihaskell via the /opt/stack/global-project/stack.yaml \
-    stack install ihaskell && \
-    stack build ghc-parser && \
-    stack build ipython-kernel && \
+    stack build $STACK_ARGS ihaskell && \
+    stack build $STACK_ARGS ghc-parser && \
+    stack build $STACK_ARGS ipython-kernel && \
     # Install IHaskell.Display libraries https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display \
-    stack build ihaskell-aeson && \
-    stack build ihaskell-blaze && \
-    stack build ihaskell-gnuplot && \
-    stack build ihaskell-juicypixels && \
-    stack build ihaskell-widgets && \
-    stack build ihaskell-graphviz && \
-    stack build hvega && \
-    stack build ihaskell-hvega && \
+    stack build $STACK_ARGS ihaskell-aeson && \
+    stack build $STACK_ARGS ihaskell-blaze && \
+    stack build $STACK_ARGS ihaskell-gnuplot && \
+    stack build $STACK_ARGS ihaskell-juicypixels && \
+    stack build $STACK_ARGS ihaskell-widgets && \
+    stack build $STACK_ARGS ihaskell-graphviz && \
+    stack build $STACK_ARGS hvega && \
+    stack build $STACK_ARGS ihaskell-hvega && \
     fix-permissions /opt/IHaskell && \
     fix-permissions $STACK_ROOT && \
     fix-permissions /opt/hvega && \
     # Install the kernel at /usr/local/share/jupyter/kernels, which is in `jupyter --paths` data: \
-    ihaskell install --stack --prefix=/usr/local && \
+    stack exec ihaskell -- install --stack --prefix=/usr/local && \
     # Install the ihaskell_labextension for JupyterLab syntax highlighting \
     npm install -g typescript && \
     cd IHaskell/ihaskell_labextension && \
