@@ -62,7 +62,7 @@ Then you can install the missing package from the terminal in your container:
 stack install deque
 ~~~
 
-Or, in a notebook, you can use the GHCi-style shell commands:
+Or, in a notebook, you can use the [GHCi-style shell commands](https://github.com/gibiansky/IHaskell/wiki#shelling-out):
 
 > ~~~
 > :!stack install deque
