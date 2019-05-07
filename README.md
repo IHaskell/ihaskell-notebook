@@ -119,6 +119,12 @@ After your `stack.yaml` is configured, run `:! stack build` and then <kbd>↻</k
 
 You can try to run a IHaskell `.ipynb` in a `PWD` with a `stack.yaml` that has a `resolver` different from the `resolver` in `/opt/stack/global-project/stack.yaml`, but that is Undefined Behavior, as we say in C++.
 
+## Composition with Docker Stacks
+
+~~~
+docker build --build-arg BASE_CONTAINER=jupyter/scipy-notebook --rm --force-rm -t ihaskell_scipy:latest .
+~~~
+
 
 ## References, Links, Credits
 
