@@ -50,11 +50,11 @@ container. (The `PWD` of a notebook is the always the directory in which the not
 
 You can install libraries with `stack install`. For example, if you encounter a notebook error like:
 
-> ```
-> <interactive>:1:1: error:
->    Could not find module ‘Deque’
->    Use -v to see a list of the files searched for.
-> ```
+```
+<interactive>:1:1: error:
+   Could not find module ‘Deque’
+   Use -v to see a list of the files searched for.
+```
 
 Then you can install the missing package from the terminal in your container:
 
@@ -64,23 +64,23 @@ stack install deque
 
 Or, in a notebook, you can use the [GHCi-style shell commands](https://github.com/gibiansky/IHaskell/wiki#shelling-out):
 
-> ```
-> :!stack install deque
-> ```
+```
+:!stack install deque
+```
 
 And then <kbd>↻</kbd> restart your IHaskell kernel.
 
 You can use this technique to create a list of package dependencies at the top of a notebook:
 
-> ```
-> :!stack install deque
-> import Deque
-> Deque.head $ fromList [1,2,3]
-> ```
+```
+:!stack install deque
+import Deque
+Deque.head $ fromList [1,2,3]
+```
 
-> ~~~
-> Just 1
-> ~~~
+~~~
+Just 1
+~~~
 
 Sadly, this doesn't work quite as frictionlessly as we would like. The first time you run the notebook, the packages will be installed, but then the kernel will fail to find them. You must <kbd>↻</kbd> restart the kernel and then run the notebook again, and it will succeed.
 
@@ -120,6 +120,8 @@ After your `stack.yaml` is configured, run `:! stack build` and then <kbd>↻</k
 You can try to run a IHaskell `.ipynb` in a `PWD` with a `stack.yaml` that has a `resolver` different from the `resolver` in `/opt/stack/global-project/stack.yaml`, but that is Undefined Behavior, as we say in C++.
 
 ## Composition with Docker Stacks
+
+Rebase the IHaskell `Dockerfile` on top of another Jupyter Docker Stack image, for example the `scipy-notebook`:
 
 ```
 docker build --build-arg BASE_CONTAINER=jupyter/scipy-notebook --rm --force-rm -t ihaskell_scipy:latest .
