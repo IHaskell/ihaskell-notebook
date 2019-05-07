@@ -9,7 +9,7 @@ Provides the Jupyter [IHaskell](https://github.com/gibiansky/IHaskell) kernel
 in a Docker image which composes well with other Jupyter Docker Stacks.
 
 
-`docker run` it right now with this shell command, then open <http://localhost:8888?token=x>.
+`docker run` it right now with this shell command, then open [http://localhost:8888?token=x](http://localhost:8888?token=x).
 
 ```bash
     docker run --rm -p 8888:8888 --env JUPYTER_ENABLE_LAB=yes --env JUPYTER_TOKEN=x --name ihaskell_notebook crosscompass/ihaskell-notebook:latest
