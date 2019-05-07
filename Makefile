@@ -1,7 +1,7 @@
 .PHONY: help build dev test test-env
 
 # Docker image name and tag
-IMAGE:=jamesbrock/ihaskell-notebook
+IMAGE:=crosscompass/ihaskell-notebook
 TAG?=latest
 # Shell that make should use
 SHELL:=bash
