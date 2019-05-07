@@ -11,9 +11,9 @@ in a Docker image which composes well with other Jupyter Docker Stacks.
 
 `docker run` it right now with this shell command, then open <http://localhost:8888?token=x>.
 
-~~~bash
+```bash
     docker run --rm -p 8888:8888 --env JUPYTER_ENABLE_LAB=yes --env JUPYTER_TOKEN=x --name ihaskell_notebook crosscompass/ihaskell-notebook:latest
-~~~
+```
 
 This image includes:
 
@@ -50,33 +50,33 @@ container. (The `PWD` of a notebook is the always the directory in which the not
 
 You can install libraries with `stack install`. For example, if you encounter a notebook error like:
 
-> ~~~
+> ```
 > <interactive>:1:1: error:
 >    Could not find module ‘Deque’
 >    Use -v to see a list of the files searched for.
-> ~~~
+> ```
 
 Then you can install the missing package from the terminal in your container:
 
-~~~bash
+```bash
 stack install deque
-~~~
+```
 
 Or, in a notebook, you can use the [GHCi-style shell commands](https://github.com/gibiansky/IHaskell/wiki#shelling-out):
 
-> ~~~
+> ```
 > :!stack install deque
-> ~~~
+> ```
 
 And then <kbd>↻</kbd> restart your IHaskell kernel.
 
 You can use this technique to create a list of package dependencies at the top of a notebook:
 
-> ~~~
+> ```
 > :!stack install deque
 > import Deque
 > Deque.head $ fromList [1,2,3]
-> ~~~
+> ```
 
 > ~~~
 > Just 1
@@ -89,15 +89,15 @@ Sadly, this doesn't work quite as frictionlessly as we would like. The first tim
 Some libraries in [`IHaskell/ihaskell-display`](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display)
 are pre-installed in the JupyterLab container, if they appeared to be working at the time the JupyterLab Docker image was built. You can try to install the other `IHaskell/ihaskell-display` libraries, and they will be built from the `/opt/IHaskell` source in the container.
 
-~~~bash
+```bash
 stack install ihaskell-diagrams
-~~~
+```
 
 See the Stack *global project* `/opt/stack/global-project/stack.yaml` for information about the `/opt/IHaskell` source in the container.
 
 You can see which libraries are installed by running `ghc-pkg`:
 
-~~~bash
+```bash
 stack exec ghc-pkg -- list | grep ihaskell
     ihaskell-0.9.1.0
     ihaskell-aeson-0.3.0.1
@@ -106,7 +106,7 @@ stack exec ghc-pkg -- list | grep ihaskell
     ihaskell-hvega-0.2.0.0
     ihaskell-juicypixels-1.1.0.1
     ihaskell-widgets-0.2.3.2
-~~~
+```
 
 ## Local Stack Projects
 
@@ -121,9 +121,9 @@ You can try to run a IHaskell `.ipynb` in a `PWD` with a `stack.yaml` that has a
 
 ## Composition with Docker Stacks
 
-~~~
+```
 docker build --build-arg BASE_CONTAINER=jupyter/scipy-notebook --rm --force-rm -t ihaskell_scipy:latest .
-~~~
+```
 
 
 ## References, Links, Credits
