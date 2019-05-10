@@ -25,7 +25,6 @@ This image includes:
   * __ihaskell-blaze__ for [Blaze](http://hackage.haskell.org/package/blaze-html) HTML.
   * __ihaskell-gnuplot__ for [gnuplot](http://www.gnuplot.info/).
   * __ihaskell-juicypixels__ for [JuicyPixels](http://hackage.haskell.org/package/JuicyPixels) image serialization.
-  * [__ihaskell-widgets__](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display/ihaskell-widgets) for [ipython widgets](https://github.com/ipython/ipywidgets). ❌ *Not currently working, see [IHaskell issue #870](https://github.com/gibiansky/IHaskell/issues/870)*
   * [__DougBurke/ihaskell-hvega__](https://github.com/DougBurke/hvega) for [Vega/Vega-Lite rendering, natively supported by JupyterLab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html#vega-lite).
 
 To ensure that this image composes well with any authentication and storage configuration 
@@ -105,7 +104,6 @@ stack exec ghc-pkg -- list | grep ihaskell
     ihaskell-gnuplot-0.1.0.1
     ihaskell-hvega-0.2.0.0
     ihaskell-juicypixels-1.1.0.1
-    ihaskell-widgets-0.2.3.2
 ```
 
 ## Local Stack Projects
