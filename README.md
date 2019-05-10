@@ -40,11 +40,11 @@ This image is made with JupyterLab in mind, but it works well for classic notebo
 
 Example notebooks are collected together in the container at `/home/jovyan/ihaskell_examples`.
 
-## Stack *global project* `/opt/stack/global-project/stack.yaml`
+## Stack *global project*
 
 The `ihaskell` executable, the `ihaskell` library, the `ghc-parser` library,
 and the `ipython-kernel` library are built and installed at the level
-of the [Stack *global project*](https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration).
+of the [Stack *global project*](https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration) in `/opt/stack/global-project`.
 This means that the `ihaskell` environment is available for all users anywhere for any `PWD` inside the
 container. (The `PWD` of a notebook is the always the directory in which the notebook is saved.)
 
