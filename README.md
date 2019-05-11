@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jamesdbrock/ihaskell-notebook.svg?branch=master)](https://travis-ci.org/jamesdbrock/ihaskell-notebook)
 
-A community maintained [Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks) image. Provides the Jupyter [IHaskell](https://github.com/gibiansky/IHaskell) kernel in a Docker image which composes well with other Jupyter Docker Stacks. Pre-built images are published at [DockerHub crosscompass/ihaskell-notebook](https://hub.docker.com/r/crosscompass/ihaskell-notebook).
+A [Community Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#community-stacks) image. Provides the Jupyter [IHaskell](https://github.com/gibiansky/IHaskell) kernel in a Docker image which composes well with other Jupyter Docker Stacks. Pre-built images are published at [DockerHub crosscompass/ihaskell-notebook](https://hub.docker.com/r/crosscompass/ihaskell-notebook).
 
 
 `docker run` it right now with this shell command, then open [http://localhost:8888?token=x](http://localhost:8888?token=x).
