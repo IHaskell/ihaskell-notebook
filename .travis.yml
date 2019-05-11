@@ -7,6 +7,6 @@ services:
 install:
     - make test-env
 script:
-    - make build-fast
+    - make build
     - make test
 
