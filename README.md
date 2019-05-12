@@ -2,10 +2,10 @@
 
 [![Build Status](https://travis-ci.org/jamesdbrock/ihaskell-notebook.svg?branch=master)](https://travis-ci.org/jamesdbrock/ihaskell-notebook)
 
-A [Community Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#community-stacks) image. Provides the Jupyter [IHaskell](https://github.com/gibiansky/IHaskell) kernel in a Docker image which composes well with other Jupyter Docker Stacks. Pre-built images are published at [DockerHub crosscompass/ihaskell-notebook](https://hub.docker.com/r/crosscompass/ihaskell-notebook).
+A [Community Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#community-stacks) image. Provides the Jupyter [IHaskell](https://github.com/gibiansky/IHaskell) kernel in a Docker image which composes well with other Jupyter Docker Stacks. Images are published at [DockerHub crosscompass/ihaskell-notebook](https://hub.docker.com/r/crosscompass/ihaskell-notebook).
 
 
-`docker run` it right now with this shell command, then open [http://localhost:8888?token=x](http://localhost:8888?token=x).
+`docker run` the latest image right now with the following shell command, then open [http://localhost:8888?token=x](http://localhost:8888?token=x) to try out the Jupyter notebook.
 
 ```bash
     docker run --rm -p 8888:8888 --env JUPYTER_ENABLE_LAB=yes --env JUPYTER_TOKEN=x --name ihaskell_notebook crosscompass/ihaskell-notebook:latest
@@ -135,4 +135,4 @@ docker build --build-arg BASE_CONTAINER=jupyter/scipy-notebook --rm --force-rm -
 
 [datahaskell.org](http://www.datahaskell.org/)
 
-This Docker image was made for use by, and with the support of, [Cross Compass](https://www.cross-compass.com/) in Tokyo.
+This Docker image was made at [Cross Compass](https://www.cross-compass.com/) in Tokyo.
