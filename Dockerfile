@@ -117,8 +117,8 @@ RUN \
 # Cleanup
     npm cache clean --force && \
     rm -rf /home/$NB_USER/.cache/yarn && \
-# Clean IHaskell/.stack-work, 7GB
-    rm -rf $(find /opt/IHaskell -type d -name .stack-work) && \
+# Don't clean IHaskell/.stack-work, 7GB, this causes issue #5
+#   rm -rf $(find /opt/IHaskell -type d -name .stack-work) && \
 # Don't clean /opt/hvega
 # Clean ghc html docs, 259MB
     rm -rf $(stack path --snapshot-doc-root)/* && \
