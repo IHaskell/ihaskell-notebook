@@ -66,7 +66,7 @@ Docker container. (The `PWD` of a notebook is the always the directory in which 
 
 The Stack *global project* `resolver`
 is determined by the IHaskell project `resolver`, and all included Haskell
-libraries are built using that stack `resolver`.
+libraries are built using that stack `resolver` ([currently lts-13.22](https://github.com/gibiansky/IHaskell/blob/master/stack.yaml)).
 
 You can install libraries with `stack install`. For example, if you encounter a notebook error like:
 
