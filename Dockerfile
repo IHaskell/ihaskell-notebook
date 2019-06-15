@@ -58,7 +58,8 @@ RUN fix-permissions /etc/stack
 # https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration
 RUN mkdir -p $STACK_ROOT/global-project
 COPY stack.stack.yaml $STACK_ROOT/global-project/stack.yaml
-RUN fix-permissions $STACK_ROOT/global-project
+RUN chown --recursive $NB_UID:users $STACK_ROOT/global-project && \
+    fix-permissions $STACK_ROOT/global-project
 
 # fix-permissions for /usr/local/share/jupyter so that we can install
 # the IHaskell kernel there. Seems like the best place to install it, see

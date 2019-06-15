@@ -66,7 +66,7 @@ Docker container. (The `PWD` of a notebook is the always the directory in which 
 
 The Stack *global project* `resolver`
 is determined by the IHaskell project `resolver`, and all included Haskell
-libraries are built using that stack `resolver` ([currently lts-13.22](https://github.com/gibiansky/IHaskell/blob/master/stack.yaml)).
+libraries are built using that Stack `resolver`.
 
 You can install libraries with `stack install`. For example, if you encounter a notebook error like:
 
@@ -106,7 +106,7 @@ Sadly, this doesn't work quite as frictionlessly as we would like. The first tim
 
 ## Local Stack Projects
 
-You can run a IHaskell `.ipynb` in a stack project `PWD` which has a `stack.yaml`.
+You can run a IHaskell `.ipynb` in a Stack project `PWD` which has a `stack.yaml`.
 
 You should copy the the contents of the container's Stack *global project* `/opt/stack/global-project/stack.yaml` into the local project's `stack.yaml`. That will give you the same `resolver` as the *global project* IHaskell installation, and it will also allow you to install libraries from `IHaskell` and `IHaskell/ihaskell-display`.
 

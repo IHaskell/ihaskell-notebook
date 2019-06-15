@@ -1,26 +1,22 @@
-# Stack global default project global-project/stack.yaml for the Minimum JupyterLab
+# Stack global project global-project/stack.yaml
 # https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration
 
 packages:
-- location: /opt/IHaskell
-  subdirs:
-  - .
-  - ./ipython-kernel
-  - ./ghc-parser
-  - ./ihaskell-display/ihaskell-aeson
-  - ./ihaskell-display/ihaskell-blaze
-  - ./ihaskell-display/ihaskell-charts
-  - ./ihaskell-display/ihaskell-diagrams
-  - ./ihaskell-display/ihaskell-gnuplot
-  - ./ihaskell-display/ihaskell-graphviz
-  - ./ihaskell-display/ihaskell-hatex
-  - ./ihaskell-display/ihaskell-juicypixels
-  - ./ihaskell-display/ihaskell-magic
-  - ./ihaskell-display/ihaskell-plot
-  - ./ihaskell-display/ihaskell-rlangqq
-  - ./ihaskell-display/ihaskell-static-canvas
-  - ./ihaskell-display/ihaskell-widgets
-- location: /opt/hvega
-  subdirs:
-  - ./hvega
-  - ./ihaskell-hvega
+- /opt/IHaskell
+- /opt/IHaskell/ipython-kernel
+- /opt/IHaskell/ghc-parser
+- /opt/IHaskell/ihaskell-display/ihaskell-aeson
+- /opt/IHaskell/ihaskell-display/ihaskell-blaze
+- /opt/IHaskell/ihaskell-display/ihaskell-charts
+- /opt/IHaskell/ihaskell-display/ihaskell-diagrams
+- /opt/IHaskell/ihaskell-display/ihaskell-gnuplot
+- /opt/IHaskell/ihaskell-display/ihaskell-graphviz
+- /opt/IHaskell/ihaskell-display/ihaskell-hatex
+- /opt/IHaskell/ihaskell-display/ihaskell-juicypixels
+- /opt/IHaskell/ihaskell-display/ihaskell-magic
+- /opt/IHaskell/ihaskell-display/ihaskell-plot
+- /opt/IHaskell/ihaskell-display/ihaskell-rlangqq
+- /opt/IHaskell/ihaskell-display/ihaskell-static-canvas
+- /opt/IHaskell/ihaskell-display/ihaskell-widgets
+- /opt/hvega/hvega
+- /opt/hvega/ihaskell-hvega
