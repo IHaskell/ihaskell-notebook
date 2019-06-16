@@ -1,4 +1,4 @@
-# Haskell Stack non-project-specific config for IHaskell in the minimum JupyterLab.
+# Haskell Stack non-project-specific config for IHaskell.
 # https://docs.haskellstack.org/en/stable/yaml_configuration/#non-project-specific-config
 
 # So that all users, not just jovyan, can use the Stack default global project.
