@@ -41,12 +41,44 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
         netbase \
 # for ihaskell-graphviz
         graphviz \
-# for stack installation
+# for Stack download
         curl \
-        && \
-    rm -rf /var/lib/apt/lists/* && \
-    curl -sSL https://get.haskellstack.org/ | sh && \
-    fix-permissions $STACK_ROOT
+# Stack Debian/Ubuntu manual install dependencies
+# https://docs.haskellstack.org/en/stable/install_and_upgrade/#linux-generic
+        g++ \
+        gcc \
+        libc6-dev \
+        libffi-dev \
+        libgmp-dev \
+        make \
+        xz-utils \
+        zlib1g-dev \
+        git \
+        gnupg \
+        netbase && \
+# Clean up apt
+    rm -rf /var/lib/apt/lists/*
+
+# Stack Linux (generic) Manual download
+# https://docs.haskellstack.org/en/stable/install_and_upgrade/#linux-generic
+#
+# So that we can control Stack version, we do manual install instead of
+# automatic install:
+#
+#    curl -sSL https://get.haskellstack.org/ | sh
+#
+# We are delaying upgrade to Stack 2.1.1 to avoid a bug during `stack setup`,
+# see https://github.com/commercialhaskell/stack/issues/4889
+
+ARG STACK_VERSION="1.9.3"
+#ARG STACK_VERSION="2.1.1"
+ARG STACK_BINDIST="stack-${STACK_VERSION}-linux-x86_64"
+RUN cd /tmp && \
+    curl -sSL --output ${STACK_BINDIST}.tar.gz https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/${STACK_BINDIST}.tar.gz && \
+    tar zxf ${STACK_BINDIST}.tar.gz && \
+    cp ${STACK_BINDIST}/stack /usr/bin/stack && \
+    rm -rf ${STACK_BINDIST}.tar.gz ${STACK_BINDIST} && \
+    stack --version
 
 # Stack global non-project-specific config stack.config.yaml
 # https://docs.haskellstack.org/en/stable/yaml_configuration/#non-project-specific-config
@@ -87,20 +119,20 @@ RUN \
     git clone --depth 1 --branch $HVEGA_COMMIT https://github.com/DougBurke/hvega.git && \
 # Copy the Stack global project resolver from the IHaskell resolver.
     grep 'resolver:' /opt/IHaskell/stack.yaml >> $STACK_ROOT/global-project/stack.yaml && \
-# Note that we are NOT in the /opt/IHaskell directory here, we are installing ihaskell via the /opt/stack/global-project/stack.yaml
+# Note that we are NOT in the /opt/IHaskell directory here, we are
+# installing ihaskell via the /opt/stack/global-project/stack.yaml
     stack setup && \
     stack build $STACK_ARGS ihaskell && \
     stack build $STACK_ARGS ghc-parser && \
     stack build $STACK_ARGS ipython-kernel && \
-# Install IHaskell.Display libraries https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display
+# Install IHaskell.Display libraries
+# https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display
     stack build $STACK_ARGS ihaskell-aeson && \
     stack build $STACK_ARGS ihaskell-blaze && \
     stack build $STACK_ARGS ihaskell-gnuplot && \
     stack build $STACK_ARGS ihaskell-juicypixels && \
 # Skip install of ihaskell-widgets, they don't work.
 # See https://github.com/gibiansky/IHaskell/issues/870
-# Also, if we do want widgets, do we need to install the Python library?
-# https://github.com/jupyter-widgets/ipywidgets#install
 #   stack build $STACK_ARGS ihaskell-widgets && \
     stack build $STACK_ARGS ihaskell-graphviz && \
     stack build $STACK_ARGS hvega && \
@@ -108,7 +140,8 @@ RUN \
     fix-permissions /opt/IHaskell && \
     fix-permissions $STACK_ROOT && \
     fix-permissions /opt/hvega && \
-# Install the kernel at /usr/local/share/jupyter/kernels, which is in `jupyter --paths` data:
+# Install the kernel at /usr/local/share/jupyter/kernels, which is
+# in `jupyter --paths` data:
     stack exec ihaskell -- install --stack --prefix=/usr/local && \
 # Install the ihaskell_labextension for JupyterLab syntax highlighting
     npm install -g typescript && \
