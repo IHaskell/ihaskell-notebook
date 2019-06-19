@@ -88,6 +88,7 @@ RUN \
 # Copy the Stack global project resolver from the IHaskell resolver.
     grep 'resolver:' /opt/IHaskell/stack.yaml >> $STACK_ROOT/global-project/stack.yaml && \
 # Note that we are NOT in the /opt/IHaskell directory here, we are installing ihaskell via the /opt/stack/global-project/stack.yaml
+    stack setup && \
     stack build $STACK_ARGS ihaskell && \
     stack build $STACK_ARGS ghc-parser && \
     stack build $STACK_ARGS ipython-kernel && \

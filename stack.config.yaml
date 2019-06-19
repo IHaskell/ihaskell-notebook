@@ -10,3 +10,6 @@ local-bin-path: /opt/bin
 # We're going to be loosey with version bounds.
 allow-newer: true
 
+# Assume color terminal
+color: always
+
