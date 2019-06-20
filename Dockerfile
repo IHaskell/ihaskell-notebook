@@ -3,7 +3,7 @@ FROM $BASE_CONTAINER
 
 LABEL maintainer="James Brock <jamesbrock@gmail.com>"
 
-# Examples IHaskell notebooks will be collected in this directory.
+# Example IHaskell notebooks will be collected in this directory.
 ARG EXAMPLES_PATH=/home/$NB_USER/ihaskell_examples
 
 # Specify a git commit for IHaskell (can be branch, tag, or hash).
@@ -69,7 +69,6 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 #
 # We are delaying upgrade to Stack 2.1.1 to avoid a bug during `stack setup`,
 # see https://github.com/commercialhaskell/stack/issues/4889
-
 ARG STACK_VERSION="1.9.3"
 #ARG STACK_VERSION="2.1.1"
 ARG STACK_BINDIST="stack-${STACK_VERSION}-linux-x86_64"
