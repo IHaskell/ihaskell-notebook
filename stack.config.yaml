@@ -11,5 +11,5 @@ local-bin-path: /opt/bin
 allow-newer: true
 
 # Assume color terminal
-color: always
+# color: always # Not supported in Stack 1.9.3
 
