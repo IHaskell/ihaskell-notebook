@@ -5,10 +5,16 @@
 A [Community Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#community-stacks) image. Provides the Jupyter [IHaskell](https://github.com/gibiansky/IHaskell) kernel in a Docker image which composes well with other Jupyter Docker Stacks. Images are published at [DockerHub crosscompass/ihaskell-notebook](https://hub.docker.com/r/crosscompass/ihaskell-notebook).
 
 
-`docker run` the latest image right now with the following shell command, then open [http://localhost:8888?token=x](http://localhost:8888?token=x) to try out the Jupyter notebook.
+`docker run` the latest image right now with the following shell command, then open [http://localhost:8888?token=x](http://localhost:8888?token=x) to try out the Jupyter notebook. Your current working directory on your host computer will be mounted at __Home / pwd__ in JupyterLab.
 
 ```bash
-    docker run --rm -p 8888:8888 --env JUPYTER_ENABLE_LAB=yes --env JUPYTER_TOKEN=x --name ihaskell_notebook crosscompass/ihaskell-notebook:latest
+    docker run --rm \
+      -p 8888:8888 \
+      -v $PWD:/home/jovyan/pwd \
+      --env JUPYTER_ENABLE_LAB=yes \
+      --env JUPYTER_TOKEN=x \
+      --name ihaskell_notebook \
+      crosscompass/ihaskell-notebook:latest
 ```
 
 This image includes:
