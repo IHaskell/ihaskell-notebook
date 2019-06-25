@@ -7,14 +7,9 @@ LABEL maintainer="James Brock <jamesbrock@gmail.com>"
 ARG EXAMPLES_PATH=/home/$NB_USER/ihaskell_examples
 
 # Specify a git commit for IHaskell (can be branch, tag, or hash).
-#
-# https://github.com/gibiansky/IHaskell/commits/master
-#
 # The resolver for all stack builds will be chosen from
 # the IHaskell/stack.yaml in this commit.
-#
-# ARG IHASKELL_COMMIT=master
-ARG IHASKELL_COMMIT=f17d0a0a688f97f3e06775d8e030f848271d4eb8
+ARG IHASKELL_COMMIT=master
 
 # Specify a git commit for hvega
 ARG HVEGA_COMMIT=master
