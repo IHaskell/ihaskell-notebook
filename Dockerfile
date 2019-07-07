@@ -3,17 +3,6 @@ FROM $BASE_CONTAINER
 
 LABEL maintainer="James Brock <jamesbrock@gmail.com>"
 
-# Example IHaskell notebooks will be collected in this directory.
-ARG EXAMPLES_PATH=/home/$NB_USER/ihaskell_examples
-
-# Specify a git commit for IHaskell (can be branch, tag, or hash).
-# The resolver for all stack builds will be chosen from
-# the IHaskell/stack.yaml in this commit.
-ARG IHASKELL_COMMIT=master
-
-# Specify a git commit for hvega
-ARG HVEGA_COMMIT=master
-
 # Extra arguments to `stack build`. Used to build --fast, see Makefile.
 ARG STACK_ARGS=
 
@@ -111,6 +100,14 @@ ENV PATH ${PATH}:/opt/bin
 # Switch back to jovyan user
 USER $NB_UID
 
+# Specify a git commit for IHaskell (can be branch or tag).
+# The resolver for all stack builds will be chosen from
+# the IHaskell/stack.yaml in this commit.
+ARG IHASKELL_COMMIT=master
+
+# Specify a git commit for hvega
+ARG HVEGA_COMMIT=master
+
 # Install IHaskell
 RUN \
     cd /opt && \
@@ -158,6 +155,9 @@ RUN \
     rm -rf $(stack path --snapshot-doc-root)/* && \
 # Clean ihaskell_labextensions/node_nodemodules, 86MB
     rm -rf /opt/IHaskell/ihaskell_labextensions/node_modules
+
+# Example IHaskell notebooks will be collected in this directory.
+ARG EXAMPLES_PATH=/home/$NB_USER/ihaskell_examples
 
 # Collect all the IHaskell example notebooks in EXAMPLES_PATH.
 RUN \
