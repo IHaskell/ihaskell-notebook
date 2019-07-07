@@ -108,6 +108,11 @@ ARG IHASKELL_COMMIT=master
 # Specify a git commit for hvega
 ARG HVEGA_COMMIT=master
 
+# Change this line to invalidate the Docker cache so that the IHaskell and
+# hvega repos are forced to pull and rebuild when built on DockerHub.
+# This is inelegant, but is there a better way?
+RUN echo "build on 2019-07-07"
+
 # Install IHaskell
 RUN    cd /opt \
     && git clone --depth 1 --branch $IHASKELL_COMMIT https://github.com/gibiansky/IHaskell \
