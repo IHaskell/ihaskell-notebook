@@ -1,4 +1,4 @@
-ARG BASE_CONTAINER=jupyter/minimal-notebook
+ARG BASE_CONTAINER=jupyter/base-notebook:python-3.7.3
 FROM $BASE_CONTAINER
 
 LABEL maintainer="James Brock <jamesbrock@gmail.com>"
