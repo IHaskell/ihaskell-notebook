@@ -1,5 +1,6 @@
-ARG BASE_CONTAINER=jupyter/base-notebook:python-3.7.3
+ARG BASE_CONTAINER=jupyter/base-notebook:307ad2bb5fce
 FROM $BASE_CONTAINER
+# https://hub.docker.com/r/jupyter/base-notebook/tags
 
 LABEL maintainer="James Brock <jamesbrock@gmail.com>"
 
@@ -111,7 +112,7 @@ ARG HVEGA_COMMIT=master
 # Change this line to invalidate the Docker cache so that the IHaskell and
 # hvega repos are forced to pull and rebuild when built on DockerHub.
 # This is inelegant, but is there a better way?
-RUN echo "build on 2019-07-07"
+RUN echo "build on 2019-07-31"
 
 # Install IHaskell
 RUN    cd /opt \
