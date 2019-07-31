@@ -95,7 +95,7 @@ Or, in a notebook, you can use the [GHCi-style shell commands](https://github.co
 :!stack install deque
 ```
 
-And then <kbd>↻</kbd> restart your IHaskell kernel.
+And then <kbd>⭮</kbd> restart your IHaskell kernel.
 
 You can use this technique to create a list of package dependencies at the top of a notebook:
 
@@ -109,7 +109,7 @@ Deque.head $ fromList [1,2,3]
 Just 1
 ~~~
 
-Sadly, this doesn't work quite as frictionlessly as we would like. The first time you run the notebook, the packages will be installed, but then the kernel not load them. You must <kbd>↻</kbd> restart the kernel to load the newly-installed packages.
+Sadly, this doesn't work quite as frictionlessly as we would like. The first time you run the notebook, the packages will be installed, but then the kernel not load them. You must <kbd>⭮</kbd> restart the kernel to load the newly-installed packages.
 
 ## Local Stack Projects
 
@@ -117,7 +117,7 @@ You can run a IHaskell `.ipynb` in a Stack project `PWD` which has a `stack.yaml
 
 You should copy the the contents of the container's Stack *global project* `/opt/stack/global-project/stack.yaml` into the local project's `stack.yaml`. That will give you the same `resolver` as the *global project* IHaskell installation, and it will also allow you to install libraries from `IHaskell` and `IHaskell/ihaskell-display`.
 
-After your `stack.yaml` is configured, run `:! stack build` and then <kbd>↻</kbd> restart your IHaskell kernel.
+After your `stack.yaml` is configured, run `:! stack build` and then <kbd>⭮</kbd> restart your IHaskell kernel.
 
 You can try to run a IHaskell `.ipynb` in a `PWD` with a `stack.yaml` that has a `resolver` different from the `resolver` in `/opt/stack/global-project/stack.yaml`, but that is Undefined Behavior, as we say in C++.
 
