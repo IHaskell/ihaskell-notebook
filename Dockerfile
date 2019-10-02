@@ -57,10 +57,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 #
 #    curl -sSL https://get.haskellstack.org/ | sh
 #
-# We are delaying upgrade to Stack 2.1.1 to avoid a bug during `stack setup`,
-# see https://github.com/commercialhaskell/stack/issues/4889
-ARG STACK_VERSION="1.9.3"
-#ARG STACK_VERSION="2.1.1"
+ARG STACK_VERSION="2.1.3"
 ARG STACK_BINDIST="stack-${STACK_VERSION}-linux-x86_64"
 RUN    cd /tmp \
     && curl -sSL --output ${STACK_BINDIST}.tar.gz https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/${STACK_BINDIST}.tar.gz \
@@ -101,18 +98,19 @@ ENV PATH ${PATH}:/opt/bin
 # Switch back to jovyan user
 USER $NB_UID
 
-# Specify a git commit for IHaskell (can be branch or tag).
+# Specify a git branch for IHaskell (can be branch or tag).
 # The resolver for all stack builds will be chosen from
 # the IHaskell/stack.yaml in this commit.
 ARG IHASKELL_COMMIT=master
 
-# Specify a git commit for hvega
+# Specify a git branch for hvega
 ARG HVEGA_COMMIT=master
 
 # Change this line to invalidate the Docker cache so that the IHaskell and
 # hvega repos are forced to pull and rebuild when built on DockerHub.
-# This is inelegant, but is there a better way?
-RUN echo "build on 2019-07-31"
+# This is inelegant, but is there a better way? (IHASKELL_COMMIT=hash
+# doesn't work.)
+RUN echo "build on 2019-10-02"
 
 # Install IHaskell
 RUN    cd /opt \
