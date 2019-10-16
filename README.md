@@ -121,6 +121,11 @@ After your `stack.yaml` is configured, run `:! stack build` and then <kbd>⭮</k
 
 You can try to run a IHaskell `.ipynb` in a `PWD` with a `stack.yaml` that has a `resolver` different from the `resolver` in `/opt/stack/global-project/stack.yaml`, but that is Undefined Behavior, as we say in C++.
 
+## System GHC
+
+The GHC version specified by the IHaskell Stack `resolver` is also installed
+in the container at the system level, that is, on the executable `PATH`.
+
 ## Composition with Docker Stacks
 
 Rebase the IHaskell `Dockerfile` on top of another Jupyter Docker Stack image, for example the `scipy-notebook`:

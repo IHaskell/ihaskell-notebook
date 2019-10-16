@@ -110,7 +110,7 @@ ARG HVEGA_COMMIT=master
 # hvega repos are forced to pull and rebuild when built on DockerHub.
 # This is inelegant, but is there a better way? (IHASKELL_COMMIT=hash
 # doesn't work.)
-RUN echo "build on 2019-10-02"
+RUN echo "build on 2019-10-16"
 
 # Install IHaskell
 RUN    cd /opt \
@@ -158,6 +158,11 @@ RUN    cd /opt \
     && rm -rf $(stack path --snapshot-doc-root)/* \
 # Clean ihaskell_labextensions/node_nodemodules, 86MB
     && rm -rf /opt/IHaskell/ihaskell_labextensions/node_modules
+
+# Install system-level ghc using the ghc which was installed by stack
+# using the IHaskell resolver.
+RUN mkdir -p /opt/ghc && ln -s `stack path --compiler-bin` /opt/ghc/bin
+ENV PATH ${PATH}:/opt/ghc/bin
 
 # Example IHaskell notebooks will be collected in this directory.
 ARG EXAMPLES_PATH=/home/$NB_USER/ihaskell_examples
