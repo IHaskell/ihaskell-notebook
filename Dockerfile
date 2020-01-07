@@ -1,5 +1,6 @@
-ARG BASE_CONTAINER=jupyter/base-notebook:307ad2bb5fce
+ARG BASE_CONTAINER=jupyter/base-notebook@sha256:c9df73049562ac22bfa572e6ee7a37c55b7608d33fa0330020f6b247d28570e6
 FROM $BASE_CONTAINER
+# https://hub.docker.com/layers/jupyter/base-notebook/cd158647fb94/images/sha256-c9df73049562ac22bfa572e6ee7a37c55b7608d33fa0330020f6b247d28570e6
 # https://hub.docker.com/r/jupyter/base-notebook/tags
 
 LABEL maintainer="James Brock <jamesbrock@gmail.com>"
@@ -110,7 +111,7 @@ ARG HVEGA_COMMIT=master
 # hvega repos are forced to pull and rebuild when built on DockerHub.
 # This is inelegant, but is there a better way? (IHASKELL_COMMIT=hash
 # doesn't work.)
-RUN echo "build on 2019-10-16"
+RUN echo "build on 2020-01-07"
 
 # Install IHaskell
 RUN    cd /opt \
