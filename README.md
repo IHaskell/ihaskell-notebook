@@ -28,11 +28,12 @@ This image includes:
   * __ihaskell-blaze__ for [Blaze](http://hackage.haskell.org/package/blaze-html) HTML display
   * __ihaskell-gnuplot__ for [gnuplot](http://www.gnuplot.info/) display
   * __ihaskell-juicypixels__ for [JuicyPixels](http://hackage.haskell.org/package/JuicyPixels) image display
+  * __ihaskell-graphviz__ for [Graphviz](https://www.graphviz.org/) display
   * [__DougBurke/ihaskell-hvega__](https://github.com/DougBurke/hvega) for [Vega/Vega-Lite rendering, natively supported by JupyterLab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html#vega-lite)
 
-To ensure that this image composes well with any authentication and storage configuration 
-(for example [SystemUserSpawner](https://github.com/jupyterhub/dockerspawner#systemuserspawner)) 
-or notebook directory structure, we try to avoid installing any binaries in the Docker image in `/home/jovyan`. 
+To ensure that this image composes well with any authentication and storage configuration
+(for example [SystemUserSpawner](https://github.com/jupyterhub/dockerspawner#systemuserspawner))
+or notebook directory structure, we try to avoid installing anything in the Docker image in `/home/jovyan`.
 
 This image is made with JupyterLab in mind, but it works well for classic notebooks.
 
@@ -79,20 +80,20 @@ You can install libraries with `stack install`. For example, if you encounter a 
 
 ```
 <interactive>:1:1: error:
-   Could not find module ‘Deque’
+   Could not find module ‘Numeric.LinearAlgebra’
    Use -v to see a list of the files searched for.
 ```
 
 Then you can install the missing package from the terminal in your container:
 
 ```bash
-stack install deque
+stack install hmatrix
 ```
 
 Or, in a notebook, you can use the [GHCi-style shell commands](https://github.com/gibiansky/IHaskell/wiki#shelling-out):
 
 ```
-:!stack install deque
+:!stack install hmatrix
 ```
 
 And then <kbd>⭮</kbd> restart your IHaskell kernel.
@@ -100,13 +101,16 @@ And then <kbd>⭮</kbd> restart your IHaskell kernel.
 You can use this technique to create a list of package dependencies at the top of a notebook:
 
 ```
-:!stack install deque
-import Deque
-Deque.head $ fromList [1,2,3]
+:!stack install hmatrix
+import Numeric.LinearAlgebra
+ident 3
 ```
 
 ~~~
-Just 1
+(3><3)
+ [ 1.0, 0.0, 0.0
+ , 0.0, 1.0, 0.0
+ , 0.0, 0.0, 1.0 ]
 ~~~
 
 Sadly, this doesn't work quite as frictionlessly as we would like. The first time you run the notebook, the packages will be installed, but then the kernel not load them. You must <kbd>⭮</kbd> restart the kernel to load the newly-installed packages.
