@@ -6,10 +6,12 @@
 # select exactly what we build for the IHaskell notebook environment.
 # For example, `stack ghci` tries to load every package listed in `packages`,
 # and we don't want that behavior. Several of these packages are unbuildable
-# at the time of this writing.
+# at the time of this writing. See the Dockerfile for the list of packages
+# which are pre-built into the Docker image.
 #
-# See the Dockerfile for the list of packages which are pre-built into the
-# Docker image.
+# To make an notebook project with custom `stack.yaml`, copy this `stack.yaml`
+# file into the project directory that has the `.ipynb` notebook file and
+# then make changes to the copied `stack.yaml`.
 
 packages: []
 extra-deps:
@@ -31,5 +33,15 @@ extra-deps:
 - /opt/IHaskell/ihaskell-display/ihaskell-widgets
 - /opt/hvega/hvega
 - /opt/hvega/ihaskell-hvega
+#
+# dependencies needed for ihaskell-diagrams but not in Stackage snapshot
+- diagrams-cairo-1.4.1.1
+- cairo-0.13.8.0
+- pango-0.13.8.0
+- glib-0.13.8.0
+- gtk2hs-buildtools-0.13.8.0
+#
+# dependences needed for ihaskell-charts but not in Stackage snapshot
+- Chart-cairo-1.9.3
 
 # Resolver copied from IHaskell stack.yaml, see the Dockerfile.

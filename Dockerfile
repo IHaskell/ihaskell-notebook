@@ -108,7 +108,7 @@ ARG HVEGA_COMMIT=master
 # hvega repos are forced to pull and rebuild when built on DockerHub.
 # This is inelegant, but is there a better way? (IHASKELL_COMMIT=hash
 # doesn't work.)
-RUN echo "built on 2020-03-31"
+RUN echo "built on 2020-04-26"
 
 # Clone IHaskell and install ghc from the IHaskell resolver
 RUN    cd /opt \
@@ -116,30 +116,41 @@ RUN    cd /opt \
     && git clone --depth 1 --branch $HVEGA_COMMIT https://github.com/DougBurke/hvega.git \
 # Copy the Stack global project resolver from the IHaskell resolver.
     && grep 'resolver:' /opt/IHaskell/stack.yaml >> $STACK_ROOT/global-project/stack.yaml \
-    && stack setup
+    && fix-permissions /opt/IHaskell \
+    && fix-permissions $STACK_ROOT \
+    && fix-permissions /opt/hvega \
+    && stack setup \
+    && fix-permissions $STACK_ROOT
 
 # Build IHaskell
-RUN    cd /opt \
-    && stack build $STACK_ARGS ihaskell \
+RUN    stack build $STACK_ARGS ihaskell \
 # Note that we are NOT in the /opt/IHaskell directory here, we are
 # installing ihaskell via the paths given in /opt/stack/global-project/stack.yaml
     && stack build $STACK_ARGS ghc-parser \
     && stack build $STACK_ARGS ipython-kernel \
+    && fix-permissions $STACK_ROOT
+
 # Install IHaskell.Display libraries
 # https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display
-    && stack build $STACK_ARGS ihaskell-aeson \
+RUN    stack build $STACK_ARGS ihaskell-aeson \
     && stack build $STACK_ARGS ihaskell-blaze \
+    && stack build $STACK_ARGS ihaskell-charts \
+    && stack build $STACK_ARGS ihaskell-diagrams \
     && stack build $STACK_ARGS ihaskell-gnuplot \
+    && stack build $STACK_ARGS ihaskell-graphviz \
+    && stack build $STACK_ARGS ihaskell-hatex \
     && stack build $STACK_ARGS ihaskell-juicypixels \
+#   && stack build $STACK_ARGS ihaskell-magic \
+#   && stack build $STACK_ARGS ihaskell-plot \
+#   && stack build $STACK_ARGS ihaskell-rlangqq \
+#   && stack build $STACK_ARGS ihaskell-static-canvas \
 # Skip install of ihaskell-widgets, they don't work.
 # See https://github.com/gibiansky/IHaskell/issues/870
 #   && stack build $STACK_ARGS ihaskell-widgets \
-    && stack build $STACK_ARGS ihaskell-graphviz \
     && stack build $STACK_ARGS hvega \
     && stack build $STACK_ARGS ihaskell-hvega \
-    && fix-permissions /opt/IHaskell \
-    && fix-permissions $STACK_ROOT \
-    && fix-permissions /opt/hvega
+    && fix-permissions $STACK_ROOT
+
 # Cleanup
 # Don't clean IHaskell/.stack-work, 7GB, this causes issue #5
 #   && rm -rf $(find /opt/IHaskell -type d -name .stack-work) \
@@ -188,11 +199,11 @@ RUN    mkdir -p $EXAMPLES_PATH \
     && cp --recursive /opt/IHaskell/notebooks/* ihaskell/ \
     && mkdir -p ihaskell-juicypixels \
     && cp /opt/IHaskell/ihaskell-display/ihaskell-juicypixels/*.ipynb ihaskell-juicypixels/ \
+    && mkdir -p ihaskell-charts \
+    && cp /opt/IHaskell/ihaskell-display/ihaskell-charts/*.ipynb ihaskell-charts/ \
+    && mkdir -p ihaskell-diagrams \
+    && cp /opt/IHaskell/ihaskell-display/ihaskell-diagrams/*.ipynb ihaskell-diagrams/ \
 # Don't install these examples for these non-working libraries.
-#   && mkdir -p ihaskell-charts \
-#   && cp /opt/IHaskell/ihaskell-display/ihaskell-charts/*.ipynb ihaskell-charts/ \
-#   && mkdir -p ihaskell-diagrams \
-#   && cp /opt/IHaskell/ihaskell-display/ihaskell-diagrams/*.ipynb ihaskell-diagrams/ \
 #   && mkdir -p ihaskell-widgets \
 #   && cp --recursive /opt/IHaskell/ihaskell-display/ihaskell-widgets/Examples/* ihaskell-widgets/ \
     && mkdir -p ihaskell-hvega \
