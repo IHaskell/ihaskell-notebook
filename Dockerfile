@@ -58,7 +58,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 #
 #    curl -sSL https://get.haskellstack.org/ | sh
 #
-ARG STACK_VERSION="2.1.3"
+ARG STACK_VERSION="2.3.1"
 ARG STACK_BINDIST="stack-${STACK_VERSION}-linux-x86_64"
 RUN    cd /tmp \
     && curl -sSL --output ${STACK_BINDIST}.tar.gz https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/${STACK_BINDIST}.tar.gz \
@@ -108,7 +108,7 @@ ARG HVEGA_COMMIT=master
 # hvega repos are forced to pull and rebuild when built on DockerHub.
 # This is inelegant, but is there a better way? (IHASKELL_COMMIT=hash
 # doesn't work.)
-RUN echo "built on 2020-04-26"
+RUN echo "built on 2020-05-30"
 
 # Clone IHaskell and install ghc from the IHaskell resolver
 RUN    cd /opt \
@@ -186,6 +186,11 @@ RUN \
 # Cleanup
     && npm cache clean --force \
     && rm -rf /home/$NB_USER/.cache/yarn \
+# Don't clean IHaskell/.stack-work, 7GB, this causes issue #5
+#   && rm -rf $(find /opt/IHaskell -type d -name .stack-work) \
+# Don't clean /opt/hvega
+# Don't clean ghc html docs
+#    && rm -rf $(stack path --snapshot-doc-root)/* \
 # Clean ihaskell_labextensions/node_nodemodules, 86MB
     && rm -rf /opt/IHaskell/ihaskell_labextension/node_modules
 
