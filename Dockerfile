@@ -99,21 +99,18 @@ ENV PATH ${PATH}:/opt/bin
 # Specify a git branch for IHaskell (can be branch or tag).
 # The resolver for all stack builds will be chosen from
 # the IHaskell/stack.yaml in this commit.
-ARG IHASKELL_COMMIT=master
-
+# IHaskell 2020-05-28
+ARG IHASKELL_COMMIT=a992ad83702e55b774de234d77ffd2682d842682
 # Specify a git branch for hvega
-ARG HVEGA_COMMIT=master
-
-# Change this line to invalidate the Docker cache so that the IHaskell and
-# hvega repos are forced to pull and rebuild when built on DockerHub.
-# This is inelegant, but is there a better way? (IHASKELL_COMMIT=hash
-# doesn't work.)
-RUN echo "built on 2020-04-26"
+# hvega 2020-06-11
+ARG HVEGA_COMMIT=58a6861a3ebecdfe2ade149c1bff3064341fee33
 
 # Clone IHaskell and install ghc from the IHaskell resolver
 RUN    cd /opt \
-    && git clone --depth 1 --branch $IHASKELL_COMMIT https://github.com/gibiansky/IHaskell \
-    && git clone --depth 1 --branch $HVEGA_COMMIT https://github.com/DougBurke/hvega.git \
+    && curl -L "https://github.com/gibiansky/IHaskell/tarball/$IHASKELL_COMMIT" | tar -xzf - \
+	&& mv *IHaskell* IHaskell \
+    && curl -L "https://github.com/DougBurke/hvega/tarball/$HVEGA_COMMIT" | tar xzf - \
+	&& mv *hvega* hvega \
 # Copy the Stack global project resolver from the IHaskell resolver.
     && grep 'resolver:' /opt/IHaskell/stack.yaml >> $STACK_ROOT/global-project/stack.yaml \
     && fix-permissions /opt/IHaskell \
