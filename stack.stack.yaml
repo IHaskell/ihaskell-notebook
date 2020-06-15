@@ -41,7 +41,22 @@ extra-deps:
 - glib-0.13.8.0
 - gtk2hs-buildtools-0.13.8.0
 #
-# dependences needed for ihaskell-charts but not in Stackage snapshot
+# dependencies needed for ihaskell-charts but not in Stackage snapshot
 - Chart-cairo-1.9.3
+#
+# dependencies needed for ihaskell-plot but not in Stackage snapshot
+- plot-0.2.3.10
+#
+# dependencies needed for ihaskell-magic but not in Stackage snapshot
+- magic-1.1
+#
+# dependencies needed for ihaskell-static-canvas but not in Stackage snapshot
+- static-canvas-0.2.0.3
+#
+# dependencies needed for ihaskell-rlangqq but not in Stackage snapshot
+# (fails to build, ambiguous `<>` in xformat)
+- Rlang-QQ-0.3.1.0
+- HList-0.5.0.0
+- xformat-0.1.2.1
 
 # Resolver copied from IHaskell stack.yaml, see the Dockerfile.
