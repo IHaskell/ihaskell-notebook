@@ -1,6 +1,6 @@
-ARG BASE_CONTAINER=jupyter/base-notebook@sha256:caf663fd9344275af065c740cfc4fe686119b7640313251c7777dae53c104031
+ARG BASE_CONTAINER=jupyter/base-notebook@sha256:6a05fb698d02702abda2f24469cc1a7eabf508c0c9fdeed5d67d3f97633544c7
 FROM $BASE_CONTAINER
-# https://hub.docker.com/layers/jupyter/base-notebook/lab-2.0.1/images/sha256-caf663fd9344275af065c740cfc4fe686119b7640313251c7777dae53c104031?context=explore
+# https://hub.docker.com/layers/jupyter/base-notebook/lab-2.1.3/images/sha256-6a05fb698d02702abda2f24469cc1a7eabf508c0c9fdeed5d67d3f97633544c7?context=explore
 # https://hub.docker.com/r/jupyter/base-notebook/tags
 
 LABEL maintainer="James Brock <jamesbrock@gmail.com>"
