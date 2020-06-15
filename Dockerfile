@@ -146,7 +146,10 @@ RUN    stack build $STACK_ARGS ihaskell-aeson \
 #   && stack build $STACK_ARGS ihaskell-widgets \
     && stack build $STACK_ARGS hvega \
     && stack build $STACK_ARGS ihaskell-hvega \
-    && fix-permissions $STACK_ROOT
+    && fix-permissions $STACK_ROOT \
+# Fix for https://github.com/jamesdbrock/ihaskell-notebook/issues/14#issuecomment-636334824
+    && fix-permissions /opt/IHaskell \
+    && fix-permissions /opt/hvega
 
 # Cleanup
 # Don't clean IHaskell/.stack-work, 7GB, this causes issue #5
