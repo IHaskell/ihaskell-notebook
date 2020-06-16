@@ -73,10 +73,10 @@ RUN mkdir -p /etc/stack
 COPY stack.config.yaml /etc/stack/config.yaml
 RUN fix-permissions /etc/stack
 
-# Stack global project stack.stack.yaml
+# Stack global project stack.yaml
 # https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration
 RUN mkdir -p $STACK_ROOT/global-project
-COPY stack.stack.yaml $STACK_ROOT/global-project/stack.yaml
+COPY global-project.stack.yaml $STACK_ROOT/global-project/stack.yaml
 RUN    chown --recursive $NB_UID:users $STACK_ROOT/global-project \
     && fix-permissions $STACK_ROOT/global-project
 
