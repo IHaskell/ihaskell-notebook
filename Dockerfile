@@ -117,7 +117,9 @@ RUN    cd /opt \
     && fix-permissions $STACK_ROOT \
     && fix-permissions /opt/hvega \
     && stack setup \
-    && fix-permissions $STACK_ROOT
+    && fix-permissions $STACK_ROOT \
+# Clean 176MB
+    && rm /opt/stack/programs/x86_64-linux/ghc-8.6.5.tar.xz
 
 # Build IHaskell
 RUN    stack build $STACK_ARGS ihaskell \
