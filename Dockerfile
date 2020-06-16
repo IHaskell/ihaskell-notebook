@@ -58,7 +58,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 #
 #    curl -sSL https://get.haskellstack.org/ | sh
 #
-ARG STACK_VERSION="2.1.3"
+ARG STACK_VERSION="2.3.1"
 ARG STACK_BINDIST="stack-${STACK_VERSION}-linux-x86_64"
 RUN    cd /tmp \
     && curl -sSL --output ${STACK_BINDIST}.tar.gz https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/${STACK_BINDIST}.tar.gz \
@@ -99,18 +99,20 @@ ENV PATH ${PATH}:/opt/bin
 # Specify a git branch for IHaskell (can be branch or tag).
 # The resolver for all stack builds will be chosen from
 # the IHaskell/stack.yaml in this commit.
+# https://github.com/gibiansky/IHaskell/commits/master
 # IHaskell 2020-05-28
 ARG IHASKELL_COMMIT=a992ad83702e55b774de234d77ffd2682d842682
 # Specify a git branch for hvega
+# https://github.com/DougBurke/hvega/commits/master
 # hvega 2020-06-11
 ARG HVEGA_COMMIT=58a6861a3ebecdfe2ade149c1bff3064341fee33
 
 # Clone IHaskell and install ghc from the IHaskell resolver
 RUN    cd /opt \
-    && curl -L "https://github.com/gibiansky/IHaskell/tarball/$IHASKELL_COMMIT" | tar -xzf - \
-	&& mv *IHaskell* IHaskell \
+    && curl -L "https://github.com/gibiansky/IHaskell/tarball/$IHASKELL_COMMIT" | tar xzf - \
+    && mv *IHaskell* IHaskell \
     && curl -L "https://github.com/DougBurke/hvega/tarball/$HVEGA_COMMIT" | tar xzf - \
-	&& mv *hvega* hvega \
+    && mv *hvega* hvega \
 # Copy the Stack global project resolver from the IHaskell resolver.
     && grep 'resolver:' /opt/IHaskell/stack.yaml >> $STACK_ROOT/global-project/stack.yaml \
     && fix-permissions /opt/IHaskell \
@@ -121,12 +123,22 @@ RUN    cd /opt \
 # Clean 176MB
     && rm /opt/stack/programs/x86_64-linux/ghc-8.6.5.tar.xz
 
+# ghc-parser and ipython-kernel are dependencies of ihaskell.
+# Build them first in separate RUN commands so we don't exceed Dockerhub
+# resource limits and fail with no build log.
+# https://success.docker.com/article/docker-hub-automated-build-fails-and-the-logs-are-missing-empty
+# Build ghc-parser
+RUN    stack build $STACK_ARGS ghc-parser \
+    && fix-permissions /opt/IHaskell \
+    && fix-permissions $STACK_ROOT
+# Build ipython-kernel
+RUN    stack build $STACK_ARGS ipython-kernel \
+    && fix-permissions /opt/IHaskell \
+    && fix-permissions $STACK_ROOT
 # Build IHaskell
 RUN    stack build $STACK_ARGS ihaskell \
 # Note that we are NOT in the /opt/IHaskell directory here, we are
 # installing ihaskell via the paths given in /opt/stack/global-project/stack.yaml
-    && stack build $STACK_ARGS ghc-parser \
-    && stack build $STACK_ARGS ipython-kernel \
     && fix-permissions /opt/IHaskell \
     && fix-permissions $STACK_ROOT
 
