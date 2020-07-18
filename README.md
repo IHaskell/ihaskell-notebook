@@ -72,9 +72,12 @@ stack exec ghc-pkg -- list | grep ihaskell
 The `ihaskell` executable, the `ihaskell` library, the `ghc-parser` library,
 and the `ipython-kernel` library are built and installed at the level
 of the [Stack *global project*](https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration) in `/opt/stack/global-project`.
+This design choice was discussed in [IHaskell issue #715](https://github.com/gibiansky/IHaskell/issues/715#issuecomment-338580095).
 
-This means that the `ihaskell` environment is available for all users anywhere for any `PWD` inside the
-Docker container. (The `PWD` of a notebook is the always the directory in which the notebook is saved.)
+This means that the `ihaskell` environment is available for all users in any directory mounted in the
+Docker container, __which is one of the main advantage of this IHaskell Docker image.__ 
+The present working directory (`PWD`) of a Jupyter notebook is the always the directory in which the notebook
+is saved.
 
 The Stack *global project* `resolver`
 is determined by the IHaskell project `resolver`, and all included Haskell
