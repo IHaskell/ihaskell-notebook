@@ -5,16 +5,10 @@
 A [Community Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#community-stacks) image. Provides the Jupyter [IHaskell](https://github.com/gibiansky/IHaskell) kernel in a Docker image which composes well with other Jupyter Docker Stacks. Images are published at [DockerHub crosscompass/ihaskell-notebook](https://hub.docker.com/r/crosscompass/ihaskell-notebook).
 
 
-`docker run` the latest image right now with the following shell command, then open [http://localhost:8888?token=x](http://localhost:8888?token=x) to try out the Jupyter notebook. Your current working directory on your host computer will be mounted at __Home / pwd__ in JupyterLab.
+`docker run` the latest image right now with the following shell command, then open [http://localhost:8888](http://localhost:8888) to try out the Jupyter notebook. Your current working directory on your host computer will be mounted at __Home / pwd__ in JupyterLab.
 
 ```bash
-    docker run --rm \
-      -p 8888:8888 \
-      -v $PWD:/home/jovyan/pwd \
-      --env JUPYTER_ENABLE_LAB=yes \
-      --env JUPYTER_TOKEN=x \
-      --name ihaskell_notebook \
-      crosscompass/ihaskell-notebook:latest
+docker run --rm -p 8888:8888 -v $PWD:/home/jovyan/pwd --name ihaskell_notebook crosscompass/ihaskell-notebook:latest jupyter lab --LabApp.token=''
 ```
 
 This image includes:
@@ -75,7 +69,7 @@ of the [Stack *global project*](https://docs.haskellstack.org/en/stable/yaml_con
 This design choice was discussed in [IHaskell issue #715](https://github.com/gibiansky/IHaskell/issues/715#issuecomment-338580095).
 
 This means that the `ihaskell` environment is available for all users in any directory mounted in the
-Docker container, __which is one of the main advantage of this IHaskell Docker image.__ 
+Docker container, so you can __save and run `.ipynb` notebook files in any directory__, which is one of the main advantage of this IHaskell Docker image.
 The present working directory (`PWD`) of a Jupyter notebook is the always the directory in which the notebook
 is saved.
 
