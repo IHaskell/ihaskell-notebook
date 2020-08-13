@@ -17,14 +17,14 @@ This image includes:
 * [__IHaskell__](https://github.com/gibiansky/IHaskell) Jupyter kernel
 * [__ihaskell_labextension__](https://github.com/gibiansky/IHaskell/tree/master/ihaskell_labextension) JupyterLab extension for Haskell syntax highlighting in notebooks
 * Haskell libraries for instances of [IHaskell.Display](https://www.stackage.org/haddock/lts-12.26/ihaskell-0.9.1.0/IHaskell-Display.html)
-  * __ihaskell-aeson__ for [Aeson](http://hackage.haskell.org/package/aeson) JSON
-  * __ihaskell-blaze__ for [Blaze](http://hackage.haskell.org/package/blaze-html) HTML
-  * __ihaskell-gnuplot__ for [gnuplot](http://www.gnuplot.info/)
-  * __ihaskell-juicypixels__ for [JuicyPixels](http://hackage.haskell.org/package/JuicyPixels) images
-  * __ihaskell-graphviz__ for [Graphviz](https://www.graphviz.org/)
-  * __ihaskell-diagrams__ for [diagrams](https://archives.haskell.org/projects.haskell.org/diagrams/)
-  * __ihaskell-charts__ for [Chart](https://github.com/timbod7/haskell-chart/wiki)
-  * __ihaskell-hatex__ for [HaTeX](http://daniel-diaz.github.io/projects/hatex/hatex-guide.html) LaTeX
+  * __ihaskell-aeson__ for [Aeson](http://hackage.haskell.org/package/aeson) JSON display
+  * __ihaskell-blaze__ for [Blaze](http://hackage.haskell.org/package/blaze-html) HTML display
+  * __ihaskell-gnuplot__ for [gnuplot](http://www.gnuplot.info/) display
+  * __ihaskell-juicypixels__ for [JuicyPixels](http://hackage.haskell.org/package/JuicyPixels) image display
+  * __ihaskell-graphviz__ for [Graphviz](https://www.graphviz.org/) display
+  * __ihaskell-diagrams__ for [diagrams](https://archives.haskell.org/projects.haskell.org/diagrams/) display
+  * __ihaskell-charts__ for [Chart](https://github.com/timbod7/haskell-chart/wiki) display
+  * __ihaskell-hatex__ for [HaTeX](http://daniel-diaz.github.io/projects/hatex/hatex-guide.html) LaTeX display
   * [__DougBurke/ihaskell-hvega__](https://github.com/DougBurke/hvega) for [Vega/Vega-Lite rendering, natively supported by JupyterLab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html#vega-lite)
 * [__Haskell Stack__](https://docs.haskellstack.org/en/stable/README/) package manager, with [Glasgow Haskell Compiler](https://www.haskell.org/ghc/).
 

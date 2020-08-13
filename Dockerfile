@@ -15,7 +15,7 @@ ENV STACK_ROOT=/opt/stack
 RUN mkdir -p $STACK_ROOT
 RUN fix-permissions $STACK_ROOT
 
-# Install Haskell Stack and its dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -yq --no-install-recommends \
         python3-pip \
         git \
@@ -46,7 +46,9 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
         zlib1g-dev \
         git \
         gnupg \
-        netbase && \
+        netbase \
+# Need less for general maintenance
+        less && \
 # Clean up apt
     rm -rf /var/lib/apt/lists/*
 
@@ -121,7 +123,7 @@ RUN    cd /opt \
     && stack setup \
     && fix-permissions $STACK_ROOT \
 # Clean 176MB
-    && rm /opt/stack/programs/x86_64-linux/ghc-8.6.5.tar.xz
+    && rm /opt/stack/programs/x86_64-linux/ghc*.tar.xz
 
 # ghc-parser and ipython-kernel are dependencies of ihaskell.
 # Build them first in separate RUN commands so we don't exceed Dockerhub
