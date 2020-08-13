@@ -111,7 +111,8 @@ ARG HVEGA_COMMIT=58a6861a3ebecdfe2ade149c1bff3064341fee33
 
 # Clone IHaskell and install ghc from the IHaskell resolver
 RUN    cd /opt \
-    && curl -L "https://github.com/gibiansky/IHaskell/tarball/$IHASKELL_COMMIT" | tar xzf - \
+#    && curl -L "https://github.com/gibiansky/IHaskell/tarball/$IHASKELL_COMMIT" | tar xzf - \
+    && curl -L "https://github.com/jamesdbrock/IHaskell/tarball/f4e02b2a72efba1be6e3a1a228fc7e228f3254cf" | tar xzf - \
     && mv *IHaskell* IHaskell \
     && curl -L "https://github.com/DougBurke/hvega/tarball/$HVEGA_COMMIT" | tar xzf - \
     && mv *hvega* hvega \
@@ -187,6 +188,20 @@ RUN mkdir -p /opt/ghc && ln -s `stack path --compiler-bin` /opt/ghc/bin \
     && fix-permissions /opt/ghc
 ENV PATH ${PATH}:/opt/ghc/bin
 
+# ghcide 2020-07-20
+ARG GHCIDE_COMMIT=251ee08da3f2c5f4cfc3a1bbc3e94eb4740b55d9
+
+# Clone ghcide, build and install with its own resolver, which must have the
+# same version of ghc as the IHaskell resolver.
+# https://github.com/digital-asset/ghcide
+RUN    cd /opt \
+    && curl -L "https://github.com/digital-asset/ghcide/tarball/$GHCIDE_COMMIT" | tar xzf - \
+    && mv *ghcide* ghcide \
+    && cd ghcide \
+    && stack install ghcide \
+    && fix-permissions /opt/ghcide \
+    && fix-permissions $STACK_ROOT
+
 # Switch back to jovyan user
 USER $NB_UID
 
@@ -205,6 +220,31 @@ RUN \
     && rm -rf /home/$NB_USER/.cache/yarn \
 # Clean ihaskell_labextensions/node_nodemodules, 86MB
     && rm -rf /opt/IHaskell/ihaskell_labextension/node_modules
+
+# https://github.com/krassowski/jupyterlab-lsp#installation
+RUN pip install jupyter-lsp
+RUN    conda install --yes -c conda-forge nodejs \
+    && conda clean --all -f -y
+RUN jupyter labextension install @krassowski/jupyterlab-lsp
+RUN    conda install --yes -c conda-forge python-language-server \
+    && conda clean --all -f -y
+
+USER root
+
+# https://jupyterlab-lsp.readthedocs.io/en/latest/Configuring.html#language_servers
+# RUN    mkdir -p /etc/jupyter/jupyter_notebook_config.d/ \
+#     && fix-permissions /etc/jupyter
+# COPY ghcide-language-server.json /etc/jupyter/jupyter_notebook_config.d/
+# RUN    chown --recursive $NB_UID:users /etc/jupyter \
+#     && fix-permissions /etc/jupyter
+RUN    mkdir -p /usr/local/etc/jupyter \
+    && fix-permissions /usr/local/etc/jupyter
+COPY ghcide-language-server.json /usr/local/etc/jupyter/jupyter_notebook_config.json
+RUN    chown --recursive $NB_UID:users /usr/local/etc/jupyter \
+    && fix-permissions /usr/local/etc/jupyter
+
+# Switch back to jovyan user
+USER $NB_UID
 
 # Example IHaskell notebooks will be collected in this directory.
 ARG EXAMPLES_PATH=/home/$NB_USER/ihaskell_examples
