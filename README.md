@@ -22,7 +22,6 @@ This image includes:
 
 * [__JupyterLab 2__](https://jupyterlab.readthedocs.io/en/stable/)
 * [__IHaskell__](https://github.com/gibiansky/IHaskell) Jupyter kernel
-* [__ihaskell_labextension__](https://github.com/gibiansky/IHaskell/tree/master/ihaskell_labextension) JupyterLab extension for Haskell syntax highlighting in notebooks
 * Haskell libraries for instances of [IHaskell.Display](https://www.stackage.org/haddock/lts-12.26/ihaskell-0.9.1.0/IHaskell-Display.html)
   * __ihaskell-aeson__ for [Aeson](http://hackage.haskell.org/package/aeson) JSON display
   * __ihaskell-blaze__ for [Blaze](http://hackage.haskell.org/package/blaze-html) HTML display
