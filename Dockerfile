@@ -103,7 +103,7 @@ ENV PATH ${PATH}:/opt/bin
 # the IHaskell/stack.yaml in this commit.
 # https://github.com/gibiansky/IHaskell/commits/master
 # IHaskell 2020-05-28
-ARG IHASKELL_COMMIT=a992ad83702e55b774de234d77ffd2682d842682
+ARG IHASKELL_COMMIT=aa15573158f91d3dedde38c76debf1e0ba171731
 # Specify a git branch for hvega
 # https://github.com/DougBurke/hvega/commits/master
 # hvega 2020-06-11
@@ -193,18 +193,7 @@ USER $NB_UID
 RUN \
 # Install the IHaskell kernel at /usr/local/share/jupyter/kernels, which is
 # in `jupyter --paths` data:
-       stack exec ihaskell -- install --stack --prefix=/usr/local \
-# Install the ihaskell_labextension for JupyterLab syntax highlighting
-    && npm install -g typescript \
-    && cd /opt/IHaskell/ihaskell_labextension \
-    && npm install \
-    && npm run build \
-    && jupyter labextension install . \
-# Cleanup
-    && npm cache clean --force \
-    && rm -rf /home/$NB_USER/.cache/yarn \
-# Clean ihaskell_labextensions/node_nodemodules, 86MB
-    && rm -rf /opt/IHaskell/ihaskell_labextension/node_modules
+       stack exec ihaskell -- install --stack --prefix=/usr/local
 
 # Example IHaskell notebooks will be collected in this directory.
 ARG EXAMPLES_PATH=/home/$NB_USER/ihaskell_examples
