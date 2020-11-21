@@ -11,6 +11,13 @@ A [Community Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io
 docker run --rm -p 8888:8888 -v $PWD:/home/jovyan/pwd --name ihaskell_notebook crosscompass/ihaskell-notebook:latest jupyter lab --LabApp.token=''
 ```
 
+Or with `podman`:
+
+```bash
+podman run --privileged --userns=keep-id --rm -p 8888:8888 -v $PWD:/home/jovyan/pwd --name ihaskell_notebook crosscompass/ihaskell-notebook:latest jupyter lab --LabApp.token=''
+```
+
+
 This image includes:
 
 * [__JupyterLab 2__](https://jupyterlab.readthedocs.io/en/stable/)
