@@ -193,7 +193,10 @@ USER $NB_UID
 RUN \
 # Install the IHaskell kernel at /usr/local/share/jupyter/kernels, which is
 # in `jupyter --paths` data:
-       stack exec ihaskell -- install --stack --prefix=/usr/local
+       stack exec ihaskell -- install --stack --prefix=/usr/local \
+# Add the --codemirror Haskell switch to enable syntax highlighting
+    && sed --in-place s/"\+RTS"/--codemirror\",\"Haskell\",\"+RTS/ /usr/local/share/jupyter/kernels/haskell/kernel.json
+# " This line is just to close the double-quote for syntax highlighting in the Dockerfile
 
 # Example IHaskell notebooks will be collected in this directory.
 ARG EXAMPLES_PATH=/home/$NB_USER/ihaskell_examples
