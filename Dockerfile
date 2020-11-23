@@ -103,7 +103,7 @@ ENV PATH ${PATH}:/opt/bin
 # the IHaskell/stack.yaml in this commit.
 # https://github.com/gibiansky/IHaskell/commits/master
 # IHaskell 2020-11-23
-ARG IHASKELL_COMMIT=6825bb9cf5bc977050dee680cc1823912ae3f3ce
+ARG IHASKELL_COMMIT=5b7e03b2caad17a51cb7490d66bf808e0e8b9d4a
 # Specify a git branch for hvega
 # https://github.com/DougBurke/hvega/commits/master
 # hvega 2020-11-09
