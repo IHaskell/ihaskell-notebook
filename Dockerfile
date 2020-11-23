@@ -102,12 +102,12 @@ ENV PATH ${PATH}:/opt/bin
 # The resolver for all stack builds will be chosen from
 # the IHaskell/stack.yaml in this commit.
 # https://github.com/gibiansky/IHaskell/commits/master
-# IHaskell 2020-05-28
-ARG IHASKELL_COMMIT=aa15573158f91d3dedde38c76debf1e0ba171731
+# IHaskell 2020-11-23
+ARG IHASKELL_COMMIT=6825bb9cf5bc977050dee680cc1823912ae3f3ce
 # Specify a git branch for hvega
 # https://github.com/DougBurke/hvega/commits/master
-# hvega 2020-06-11
-ARG HVEGA_COMMIT=58a6861a3ebecdfe2ade149c1bff3064341fee33
+# hvega 2020-11-09
+ARG HVEGA_COMMIT=77168ddd15a50a6db6d44f76232eebe7c2b507b7
 
 # Clone IHaskell and install ghc from the IHaskell resolver
 RUN    cd /opt \
