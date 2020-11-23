@@ -36,16 +36,16 @@ extra-deps:
 #
 # dependencies needed for ihaskell-diagrams but not in Stackage snapshot
 - diagrams-cairo-1.4.1.1
-- cairo-0.13.8.0
-- pango-0.13.8.0
-- glib-0.13.8.0
+- cairo-0.13.8.1
+- pango-0.13.8.1
+- glib-0.13.8.1
 - gtk2hs-buildtools-0.13.8.0
 #
 # dependencies needed for ihaskell-charts but not in Stackage snapshot
 - Chart-cairo-1.9.3
 #
 # dependencies needed for ihaskell-plot but not in Stackage snapshot
-- plot-0.2.3.10
+- plot-0.2.3.11
 #
 # dependencies needed for ihaskell-magic but not in Stackage snapshot
 - magic-1.1
