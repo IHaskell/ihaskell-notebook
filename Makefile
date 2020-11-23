@@ -5,6 +5,8 @@ IMAGE:=crosscompass/ihaskell-notebook
 TAG?=latest
 # Shell that make should use
 SHELL:=bash
+# Can export DOCKER=podman in parent environment
+DOCKER:=docker
 
 help:
 # http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
@@ -12,13 +14,13 @@ help:
 
 build: DARGS?=
 build: ## Make the latest build of the image
-	docker build $(DARGS) --rm --force-rm -t $(IMAGE):$(TAG) .
+	$(DOCKER) build $(DARGS) --rm --force-rm -t $(IMAGE):$(TAG) .
 
 dev: ARGS?=
 dev: DARGS?=
 dev: PORT?=8888
 dev: ## Make a container from a tagged image image
-	docker run -it --rm -p $(PORT):8888 $(DARGS) $(REPO) $(ARGS)
+	$(DOCKER) run -it --rm -p $(PORT):8888 $(DARGS) $(REPO) $(ARGS)
 
 test: ## Make a test run against the latest image
 	pytest tests
@@ -28,10 +30,10 @@ test-env: ## Make a test environment by installing test dependencies with pip
 
 .PHONY: up
 up: ## Launch JupyterLab with token=x
-	docker run --rm -p 8888:8888 --env JUPYTER_ENABLE_LAB=yes --env JUPYTER_TOKEN=x --name ihaskell_notebook $(IMAGE):$(TAG)
+	$(DOCKER) run --rm -p 8888:8888 --env JUPYTER_ENABLE_LAB=yes --env JUPYTER_TOKEN=x --name ihaskell_notebook $(IMAGE):$(TAG)
 
 .PHONY: build-fast
 build-fast: DARGS?=
 build-fast: ## Make the latest build of the image. `stack build --fast` (-O0) so that the build doesn't exceed the 50 minute Travis timeout.
-	docker build --build-arg STACK_ARGS=--fast $(DARGS) --rm --force-rm -t $(IMAGE):$(TAG) .
+	$(DOCKER) build --build-arg STACK_ARGS=--fast $(DARGS) --rm --force-rm -t $(IMAGE):$(TAG) .
 
