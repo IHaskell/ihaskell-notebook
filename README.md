@@ -137,6 +137,12 @@ After your `stack.yaml` is configured, run `:! stack build` and then <kbd>⭮</k
 The GHC version specified by the IHaskell Stack `resolver` is also installed
 in the container at the system level, that is, on the executable `PATH`.
 
+## Building the Dockerfile locally
+
+```
+make build
+```
+
 ## Composition with Docker Stacks
 
 Rebase the IHaskell `Dockerfile` on top of another Jupyter Docker Stack image, for example the `scipy-notebook`:
@@ -157,5 +163,7 @@ docker build --build-arg BASE_CONTAINER=jupyter/scipy-notebook --rm --force-rm -
 [When Is Haskell More Useful Than R Or Python In Data Science?](https://www.quora.com/What-are-some-use-cases-for-which-it-would-be-beneficial-to-use-Haskell-rather-than-R-or-Python-in-data-science) by [Tikhon Jelvis](https://github.com/TikhonJelvis)
 
 [datahaskell.org](http://www.datahaskell.org/)
+
+[Learn You a Haskell for Great Good, Jupyter adaptation](https://github.com/jamesdbrock/learn-you-a-haskell-notebook)
 
 This Docker image was made at [Cross Compass](https://www.cross-compass.com/) in Tokyo.

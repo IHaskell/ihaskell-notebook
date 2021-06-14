@@ -30,7 +30,7 @@ test-env: ## Make a test environment by installing test dependencies with pip
 
 .PHONY: up
 up: ## Launch JupyterLab with token=x
-	$(DOCKER) run --rm -p 8888:8888 --env JUPYTER_ENABLE_LAB=yes --env JUPYTER_TOKEN=x --name ihaskell_notebook $(IMAGE):$(TAG)
+	$(DOCKER) run --rm -p 8888:8888 --name ihaskell_notebook $(IMAGE):$(TAG) jupyter lab --LabApp.token=''
 
 .PHONY: build-fast
 build-fast: DARGS?=
