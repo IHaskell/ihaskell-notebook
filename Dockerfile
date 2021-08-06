@@ -60,7 +60,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 #
 #    curl -sSL https://get.haskellstack.org/ | sh
 #
-ARG STACK_VERSION="2.7.1"
+ARG STACK_VERSION="2.7.3"
 ARG STACK_BINDIST="stack-${STACK_VERSION}-linux-x86_64"
 RUN    cd /tmp \
     && curl -sSL --output ${STACK_BINDIST}.tar.gz https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/${STACK_BINDIST}.tar.gz \
@@ -102,12 +102,12 @@ ENV PATH ${PATH}:/opt/bin
 # The resolver for all stack builds will be chosen from
 # the IHaskell/stack.yaml in this commit.
 # https://github.com/gibiansky/IHaskell/commits/master
-# IHaskell 2020-11-23
-ARG IHASKELL_COMMIT=4e1a2a132c165e1669faaeac355eb853e1f628a3
+# IHaskell 2021-07-19
+ARG IHASKELL_COMMIT=6f1b51bb18051271910c10ac4c38de021ed4e201
 # Specify a git branch for hvega
 # https://github.com/DougBurke/hvega/commits/master
-# hvega 2020-11-09
-ARG HVEGA_COMMIT=f9fb5300fe5b446bb9e7c52d779448814dfe0ed5
+# hvega 2020-07-11
+ARG HVEGA_COMMIT=33c8c5790797e746acdebfb21191f6fe8ae50cc4
 
 # Clone IHaskell and install ghc from the IHaskell resolver
 RUN    cd /opt \
@@ -199,9 +199,18 @@ RUN \
 # Install the IHaskell kernel at /usr/local/share/jupyter/kernels, which is
 # in `jupyter --paths` data:
        stack exec ihaskell -- install --stack --prefix=/usr/local \
-# Add the --codemirror Haskell switch to enable syntax highlighting
-    && sed --in-place s/"\+RTS"/--codemirror\",\"Haskell\",\"+RTS/ /usr/local/share/jupyter/kernels/haskell/kernel.json
-# " This line is just to close the double-quote for syntax highlighting in the Dockerfile
+
+# Install the ihaskell_labextension for JupyterLab syntax highlighting
+    && npm install -g typescript \
+    && cd /opt/IHaskell/jupyterlab-ihaskell \
+    && npm install \
+    && npm run build \
+    && jupyter labextension install . \
+# Cleanup
+    && npm cache clean --force \
+    && rm -rf /home/$NB_USER/.cache/yarn \
+# Clean jupyterlab-ihaskell/node_nodemodules, 86MB
+    && rm -rf /opt/IHaskell/jupyterlab-ihaskell/node_modules
 
 # Example IHaskell notebooks will be collected in this directory.
 ARG EXAMPLES_PATH=/home/$NB_USER/ihaskell_examples

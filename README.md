@@ -20,8 +20,9 @@ podman run --privileged --userns=keep-id --rm -p 8888:8888 -v $PWD:/home/jovyan/
 
 This image includes:
 
-* [__JupyterLab 2__](https://jupyterlab.readthedocs.io/en/stable/)
+* [__JupyterLab 3__](https://jupyterlab.readthedocs.io/en/stable/)
 * [__IHaskell__](https://github.com/gibiansky/IHaskell) Jupyter kernel
+* [__jupyterlab-ihaskell__](https://github.com/gibiansky/IHaskell/tree/master/jupyterlab-ihaskell) JupyterLab extension for Haskell syntax highlighting in notebooks
 * Haskell libraries for instances of [IHaskell.Display](https://www.stackage.org/haddock/lts-12.26/ihaskell-0.9.1.0/IHaskell-Display.html)
   * __ihaskell-aeson__ for [Aeson](http://hackage.haskell.org/package/aeson) JSON display
   * __ihaskell-blaze__ for [Blaze](http://hackage.haskell.org/package/blaze-html) HTML display
@@ -137,11 +138,14 @@ After your `stack.yaml` is configured, run `:! stack build` and then <kbd>⭮</k
 The GHC version specified by the IHaskell Stack `resolver` is also installed
 in the container at the system level, that is, on the executable `PATH`.
 
-## Building the Dockerfile locally
+## Building and running the Dockerfile locally
 
 ```
 make build
+make up
 ```
+
+Open http://localhost:8888/
 
 ## Composition with Docker Stacks
 
@@ -160,10 +164,10 @@ docker build --build-arg BASE_CONTAINER=jupyter/scipy-notebook --rm --force-rm -
 
 [IHaskell Wiki with Exemplary IHaskell Notebooks](https://github.com/gibiansky/IHaskell/wiki)
 
+[Learn You a Haskell for Great Good, Jupyter adaptation](https://github.com/jamesdbrock/learn-you-a-haskell-notebook)
+
 [When Is Haskell More Useful Than R Or Python In Data Science?](https://www.quora.com/What-are-some-use-cases-for-which-it-would-be-beneficial-to-use-Haskell-rather-than-R-or-Python-in-data-science) by [Tikhon Jelvis](https://github.com/TikhonJelvis)
 
 [datahaskell.org](http://www.datahaskell.org/)
-
-[Learn You a Haskell for Great Good, Jupyter adaptation](https://github.com/jamesdbrock/learn-you-a-haskell-notebook)
 
 This Docker image was made at [Cross Compass](https://www.cross-compass.com/) in Tokyo.
