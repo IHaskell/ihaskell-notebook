@@ -199,7 +199,6 @@ RUN \
 # Install the IHaskell kernel at /usr/local/share/jupyter/kernels, which is
 # in `jupyter --paths` data:
        stack exec ihaskell -- install --stack --prefix=/usr/local \
-
 # Install the ihaskell_labextension for JupyterLab syntax highlighting
     && npm install -g typescript \
     && cd /opt/IHaskell/jupyterlab-ihaskell \
