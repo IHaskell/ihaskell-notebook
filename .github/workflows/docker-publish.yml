@@ -1,5 +1,8 @@
 name: Docker
 
+# Starter workflow template:
+# https://github.com/actions/starter-workflows/blob/685784690c0e27479347b76661c19d63045a526b/ci/docker-publish.yml
+
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support

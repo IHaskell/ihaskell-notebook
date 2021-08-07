@@ -2,21 +2,21 @@
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jamesdbrock/ihaskell-notebook/master?urlpath=lab/tree/ihaskell_examples/ihaskell/IHaskell.ipynb)
 
-A [Community Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#community-stacks) image. Provides the Jupyter [IHaskell](https://github.com/gibiansky/IHaskell) kernel in a Docker image which composes well with other Jupyter Docker Stacks.
-
+A [Community Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#community-stacks) image. Provides the Jupyter [IHaskell](https://github.com/gibiansky/IHaskell) kernel in a Docker image which composes well with other Jupyter Docker Stacks. Docker images are [published on the Github container registry.](https://github.com/jamesdbrock/ihaskell-notebook/pkgs/container/ihaskell-notebook)
 
 `docker run` the latest image right now with the following shell command, then open [http://localhost:8888](http://localhost:8888) to try out the Jupyter notebook. Your current working directory on your host computer will be mounted at __Home / pwd__ in JupyterLab.
 
 ```bash
-docker run --rm -p 8888:8888 -v $PWD:/home/jovyan/pwd --name ihaskell_notebook crosscompass/ihaskell-notebook:latest jupyter lab --LabApp.token=''
+docker run --rm -p 8888:8888 -v $PWD:/home/jovyan/pwd --name ihaskell_notebook ghcr.io/jamesdbrock/ihaskell-notebook:master jupyter lab --LabApp.token=''
 ```
 
 Or with `podman`:
 
 ```bash
-podman run --privileged --userns=keep-id --rm -p 8888:8888 -v $PWD:/home/jovyan/pwd --name ihaskell_notebook crosscompass/ihaskell-notebook:latest jupyter lab --LabApp.token=''
+podman run --privileged --userns=keep-id --rm -p 8888:8888 -v $PWD:/home/jovyan/pwd --name ihaskell_notebook ghcr.io/jamesdbrock/ihaskell-notebook:master jupyter lab --LabApp.token=''
 ```
 
+## Image structure
 
 This image includes:
 
@@ -34,6 +34,8 @@ This image includes:
   * __ihaskell-hatex__ for [HaTeX](http://daniel-diaz.github.io/projects/hatex/hatex-guide.html) LaTeX display
   * [__DougBurke/ihaskell-hvega__](https://github.com/DougBurke/hvega) for [Vega/Vega-Lite rendering, natively supported by JupyterLab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html#vega-lite)
 * [__Haskell Stack__](https://docs.haskellstack.org/en/stable/README/) package manager, with [Glasgow Haskell Compiler](https://www.haskell.org/ghc/).
+
+The images is configured with the [common features of Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html).
 
 To ensure that this image composes well with any authentication and storage configuration
 (for example [SystemUserSpawner](https://github.com/jupyterhub/dockerspawner#systemuserspawner))
@@ -121,7 +123,7 @@ ident 3
  , 0.0, 0.0, 1.0 ]
 ~~~
 
-Sadly, this doesn't work quite as frictionlessly as we would like. The first time you run the notebook, the packages will be installed, but then the kernel not load them. You must <kbd>⭮</kbd> restart the kernel to load the newly-installed packages.
+Sadly, this doesn't work quite as frictionlessly as we would like. The first time you run the notebook the packages will be installed, but then the kernel will not load them. You must <kbd>⭮</kbd> restart the kernel to load the newly-installed packages.
 
 ## Local Stack Projects
 
