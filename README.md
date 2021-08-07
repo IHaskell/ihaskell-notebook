@@ -52,7 +52,7 @@ Some libraries for instances of [`IHaskell.Display`](https://www.stackage.org/ha
 The installed libraries mostly come from  mostly from [`IHaskell/ihaskell-display`](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display), and are installed if they appeared to be working at the time the JupyterLab Docker image was built. You can try to install the other `IHaskell/ihaskell-display` libraries, and they will be built from the `/opt/IHaskell` source in the container.
 
 ```bash
-stack install ihaskell-magic
+stack build ihaskell-magic
 ```
 
 See the Stack *global project* `/opt/stack/global-project/stack.yaml` for information about the `/opt/IHaskell` source in the container.
@@ -86,7 +86,7 @@ The Stack *global project* `resolver`
 is determined by the IHaskell project `resolver`, and all included Haskell
 libraries are built using that Stack `resolver`.
 
-You can install libraries with `stack install`. For example, if you encounter a notebook error like:
+You can install libraries with `stack build`. For example, if you encounter a notebook error for a missing `hmatrix` package,
 
 ```
 <interactive>:1:1: error:
@@ -94,16 +94,16 @@ You can install libraries with `stack install`. For example, if you encounter a 
    Use -v to see a list of the files searched for.
 ```
 
-Then you can install the missing package from the terminal in your container:
+then you can install the missing `hmatrix` package from the terminal in your container:
 
 ```bash
-stack install hmatrix
+stack build hmatrix
 ```
 
 Or, in a notebook, you can use the [GHCi-style shell commands](https://github.com/gibiansky/IHaskell/wiki#shelling-out):
 
 ```
-:!stack install hmatrix
+:!stack build hmatrix
 ```
 
 And then <kbd>⭮</kbd> restart your IHaskell kernel.
@@ -111,7 +111,7 @@ And then <kbd>⭮</kbd> restart your IHaskell kernel.
 You can use this technique to create a list of package dependencies at the top of a notebook:
 
 ```
-:!stack install hmatrix
+:!stack build hmatrix
 import Numeric.LinearAlgebra
 ident 3
 ```
