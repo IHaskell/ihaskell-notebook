@@ -1,6 +1,5 @@
 ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.0.16@sha256:21cd28169e3aee6fcc5613f9056c7efd8c4e6c521d1439b239e28ef5020a3c22
 FROM $BASE_CONTAINER
-# https://hub.docker.com/layers/jupyter/base-notebook/lab-2.2.9/images/sha256-387af3915c6b49c99f4823fcdb1ae2d0e7618cdd37e17b4af8c47c62f4c0880b?context=explore
 # https://hub.docker.com/r/jupyter/base-notebook/tags
 
 LABEL maintainer="James Brock <jamesbrock@gmail.com>"
@@ -102,10 +101,10 @@ ENV PATH ${PATH}:/opt/bin
 # The resolver for all stack builds will be chosen from
 # the IHaskell/stack.yaml in this commit.
 # https://github.com/gibiansky/IHaskell/commits/master
-# IHaskell 2021-07-19
-ARG IHASKELL_COMMIT=6f1b51bb18051271910c10ac4c38de021ed4e201
+# IHaskell 2021-08-18
+ARG IHASKELL_COMMIT=11c4715858e01ddb30561ee0df60351fb0392a3a
 # Specify a git branch for hvega
-# https://github.com/DougBurke/hvega/commits/master
+# https://github.com/DougBurke/hvega/commits/main
 # hvega 2020-07-11
 ARG HVEGA_COMMIT=33c8c5790797e746acdebfb21191f6fe8ae50cc4
 
@@ -163,9 +162,7 @@ RUN    stack build $STACK_ARGS ihaskell-aeson \
 #   && stack build $STACK_ARGS ihaskell-plot \
 #   && stack build $STACK_ARGS ihaskell-rlangqq \
 #   && stack build $STACK_ARGS ihaskell-static-canvas \
-# Skip install of ihaskell-widgets, they don't work.
-# See https://github.com/gibiansky/IHaskell/issues/870
-#   && stack build $STACK_ARGS ihaskell-widgets \
+    && stack build $STACK_ARGS ihaskell-widgets \
     && stack build $STACK_ARGS hvega \
     && stack build $STACK_ARGS ihaskell-hvega \
     && fix-permissions $STACK_ROOT \
@@ -211,6 +208,13 @@ RUN \
 # Clean jupyterlab-ihaskell/node_nodemodules, 86MB
     && rm -rf /opt/IHaskell/jupyterlab-ihaskell/node_modules
 
+# ihaskell-widgets needs ipywidgets
+RUN conda install --quiet --yes \
+    'ipywidgets' && \
+    conda clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
 # Example IHaskell notebooks will be collected in this directory.
 ARG EXAMPLES_PATH=/home/$NB_USER/ihaskell_examples
 
@@ -225,9 +229,8 @@ RUN    mkdir -p $EXAMPLES_PATH \
     && cp /opt/IHaskell/ihaskell-display/ihaskell-charts/*.ipynb ihaskell-charts/ \
     && mkdir -p ihaskell-diagrams \
     && cp /opt/IHaskell/ihaskell-display/ihaskell-diagrams/*.ipynb ihaskell-diagrams/ \
-# Don't install these examples for these non-working libraries.
-#   && mkdir -p ihaskell-widgets \
-#   && cp --recursive /opt/IHaskell/ihaskell-display/ihaskell-widgets/Examples/* ihaskell-widgets/ \
+    && mkdir -p ihaskell-widgets \
+    && cp --recursive /opt/IHaskell/ihaskell-display/ihaskell-widgets/Examples/* ihaskell-widgets/ \
     && mkdir -p ihaskell-hvega \
     && cp /opt/hvega/notebooks/*.ipynb ihaskell-hvega/ \
     && cp /opt/hvega/notebooks/*.tsv ihaskell-hvega/ \

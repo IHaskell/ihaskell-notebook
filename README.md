@@ -32,6 +32,7 @@ This image includes:
   * __ihaskell-diagrams__ for [diagrams](https://archives.haskell.org/projects.haskell.org/diagrams/) display
   * __ihaskell-charts__ for [Chart](https://github.com/timbod7/haskell-chart/wiki) display
   * __ihaskell-hatex__ for [HaTeX](http://daniel-diaz.github.io/projects/hatex/hatex-guide.html) LaTeX display
+  * __ihaskell-widgets__ for [Widgets](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display/ihaskell-widgets) display
   * [__DougBurke/ihaskell-hvega__](https://github.com/DougBurke/hvega) for [Vega/Vega-Lite rendering, natively supported by JupyterLab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html#vega-lite)
 * [__Haskell Stack__](https://docs.haskellstack.org/en/stable/README/) package manager, with [Glasgow Haskell Compiler](https://www.haskell.org/ghc/).
 
