@@ -31,6 +31,8 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
         netbase \
 # for ihaskell-graphviz
         graphviz \
+# for ihaskell-gnuplot
+        gnuplot-nox \
 # for Stack download
         curl \
 # Stack Debian/Ubuntu manual install dependencies
@@ -208,9 +210,11 @@ RUN \
 # Clean jupyterlab-ihaskell/node_nodemodules, 86MB
     && rm -rf /opt/IHaskell/jupyterlab-ihaskell/node_modules
 
-# ihaskell-widgets needs ipywidgets
 RUN conda install --quiet --yes \
+# ihaskell-widgets needs ipywidgets
     'ipywidgets' && \
+# ihaskell-hvega doesn't need an extension. https://github.com/jupyterlab/jupyter-renderers
+#    'jupyterlab-vega3' && \
     conda clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
@@ -235,4 +239,8 @@ RUN    mkdir -p $EXAMPLES_PATH \
     && cp /opt/hvega/notebooks/*.ipynb ihaskell-hvega/ \
     && cp /opt/hvega/notebooks/*.tsv ihaskell-hvega/ \
     && fix-permissions $EXAMPLES_PATH
+
+RUN mkdir -p $EXAMPLES_PATH/extra
+COPY notebooks/WidgetDiagram.ipynb notebooks/WidgetChart.ipynb $EXAMPLES_PATH/extra/
+RUN fix-permissions $EXAMPLES_PATH
 

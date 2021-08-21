@@ -75,7 +75,7 @@ stack exec ghc-pkg -- list | grep ihaskell
 
 The `ihaskell` executable, the `ihaskell` library, the `ghc-parser` library,
 and the `ipython-kernel` library are built and installed at the level
-of the [Stack *global project*](https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration) in `/opt/stack/global-project`.
+of the [Stack *global project*](https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration) in `/opt/stack/global-project/stack.yaml`.
 This design choice was discussed in [IHaskell issue #715](https://github.com/gibiansky/IHaskell/issues/715#issuecomment-338580095).
 
 This means that the `ihaskell` environment is available for all users in any directory mounted in the
@@ -87,7 +87,9 @@ The Stack *global project* `resolver`
 is determined by the IHaskell project `resolver`, and all included Haskell
 libraries are built using that Stack `resolver`.
 
-You can install libraries with `stack build`. For example, if you encounter a notebook error for a missing `hmatrix` package,
+### Installing Haskell packages
+
+You can install packages with `stack build`. For example, if you encounter a notebook error for a missing `hmatrix` package,
 
 ```
 <interactive>:1:1: error:
@@ -124,17 +126,33 @@ ident 3
  , 0.0, 0.0, 1.0 ]
 ~~~
 
-Sadly, this doesn't work quite as frictionlessly as we would like. The first time you run the notebook the packages will be installed, but then the kernel will not load them. You must <kbd>⭮</kbd> restart the kernel to load the newly-installed packages.
+#### Installing Haskell packages caveats
 
-## Local Stack Projects
+1. You can only install packages from the
+   [Stackage](https://www.stackage.org/) snapshot
+   from the Stack *global project* `/opt/stack/global-project/stack.yaml` `resolver`.
+2. The first time you run the notebook the packages will be installed, but
+   then the kernel will not load them. You must <kbd>⭮</kbd> restart the
+   kernel to load the newly-installed packages.
 
-You can run a IHaskell `.ipynb` in a Stack project `PWD` which has a `stack.yaml`.
+## Local project modules
 
-You should copy the entire contents of the container's Stack *global project* `/opt/stack/global-project/stack.yaml` into the local project's `stack.yaml` as a starting point. That will give you the same `resolver` as the *global project* IHaskell installation, and it will also allow you to install libraries from `IHaskell` and `IHaskell/ihaskell-display`. You can add `extra-deps` to your local project `stack.yaml` for packages which are not in the Stack `resolver`.
+You can add supporting modules of `.hs` files in the same directory where
+your `.ipynb` notebook file is stored.
 
-You probably shouldn't run a IHaskell `.ipynb` in a `PWD` with a `stack.yaml` that has a `resolver` different from the `resolver` in `/opt/stack/global-project/stack.yaml`.
+If you create a file `MyModule.hs` with the contents
 
-After your `stack.yaml` is configured, run `:! stack build` and then <kbd>⭮</kbd> restart your IHaskell kernel.
+```haskell
+module MyModule where
+support x = x + x
+```
+
+Then you can use the `support` function in your `.ipynb` notebook like this
+
+```haskell
+:load MyModule
+import MyModule (support)
+```
 
 ## System GHC
 
