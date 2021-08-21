@@ -36,7 +36,7 @@ This image includes:
   * [__DougBurke/ihaskell-hvega__](https://github.com/DougBurke/hvega) for [Vega/Vega-Lite rendering, natively supported by JupyterLab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html#vega-lite)
 * [__Haskell Stack__](https://docs.haskellstack.org/en/stable/README/) package manager, with [Glasgow Haskell Compiler](https://www.haskell.org/ghc/).
 
-The images is configured with the [common features of Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html).
+The image is configured with the [common features of Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html).
 
 To ensure that this image composes well with any authentication and storage configuration
 (for example [SystemUserSpawner](https://github.com/jupyterhub/dockerspawner#systemuserspawner))
@@ -152,7 +152,8 @@ Open http://localhost:8888/
 
 ## Composition with Docker Stacks
 
-Rebase the IHaskell `Dockerfile` on top of another Jupyter Docker Stack image, for example the `scipy-notebook`:
+Rebase the IHaskell `Dockerfile` on top of another Jupyter Docker Stack image, for example the
+[`scipy-notebook`](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-scipy-notebook):
 
 ```
 docker build --build-arg BASE_CONTAINER=jupyter/scipy-notebook --rm --force-rm -t ihaskell_scipy_notebook:latest .
