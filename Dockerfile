@@ -240,7 +240,3 @@ RUN    mkdir -p $EXAMPLES_PATH \
     && cp /opt/hvega/notebooks/*.tsv ihaskell-hvega/ \
     && fix-permissions $EXAMPLES_PATH
 
-RUN mkdir -p $EXAMPLES_PATH/extra
-COPY notebooks/WidgetDiagram.ipynb notebooks/WidgetChart.ipynb $EXAMPLES_PATH/extra/
-RUN fix-permissions $EXAMPLES_PATH
-
