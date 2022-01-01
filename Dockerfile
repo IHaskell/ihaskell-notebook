@@ -1,4 +1,4 @@
-ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.0.16@sha256:21cd28169e3aee6fcc5613f9056c7efd8c4e6c521d1439b239e28ef5020a3c22
+ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.2.5@sha256:fac61415bea84b7504d8b1e8d7b7ab2a2ea2fe8cf86d129f827cb43993b29ae0
 FROM $BASE_CONTAINER
 # https://hub.docker.com/r/jupyter/base-notebook/tags
 
@@ -103,12 +103,15 @@ ENV PATH ${PATH}:/opt/bin
 # The resolver for all stack builds will be chosen from
 # the IHaskell/stack.yaml in this commit.
 # https://github.com/gibiansky/IHaskell/commits/master
-# IHaskell 2021-08-18
-ARG IHASKELL_COMMIT=11c4715858e01ddb30561ee0df60351fb0392a3a
+# IHaskell 2021-12-25
+ARG IHASKELL_COMMIT=db8bd784344649be5c5bd072f23cdccb037d93a9
+
 # Specify a git branch for hvega
 # https://github.com/DougBurke/hvega/commits/main
-# hvega 2020-07-11
-ARG HVEGA_COMMIT=33c8c5790797e746acdebfb21191f6fe8ae50cc4
+# hvega 2021-12-30
+# hvega-0.12.0.0
+# ihaskell-hvega-0.4.0.0
+ARG HVEGA_COMMIT=10704fe4f43ef21d7daceaadfd8a25997840d7b8
 
 # Clone IHaskell and install ghc from the IHaskell resolver
 RUN    cd /opt \
