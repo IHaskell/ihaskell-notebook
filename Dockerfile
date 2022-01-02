@@ -131,27 +131,8 @@ RUN    cd /opt \
 # Clean 176MB
     && rm /opt/stack/programs/x86_64-linux/ghc*.tar.xz
 
-# ghc-parser and ipython-kernel are dependencies of ihaskell.
-# Build them first in separate RUN commands so we don't exceed Dockerhub
-# resource limits and fail with no build log.
-#
-# Also --jobs 1 to prevent the build from running out of memory on Dockerhub.
-# (ghc: internal error: Unable to commit 1048576 bytes of memory)
-#
-# https://success.docker.com/article/docker-hub-automated-build-fails-and-the-logs-are-missing-empty
-#
-# TODO We are no longer using Dockerhub, so remove the --jobs 1 flag?
-#
-# Build ghc-parser
-RUN    stack --jobs 1 build $STACK_ARGS ghc-parser \
-    && fix-permissions /opt/IHaskell \
-    && fix-permissions $STACK_ROOT
-# Build ipython-kernel
-RUN    stack --jobs 1 build $STACK_ARGS ipython-kernel \
-    && fix-permissions /opt/IHaskell \
-    && fix-permissions $STACK_ROOT
 # Build IHaskell
-RUN    stack --jobs 1 build $STACK_ARGS ihaskell \
+RUN    stack build $STACK_ARGS ihaskell \
 # Note that we are NOT in the /opt/IHaskell directory here, we are
 # installing ihaskell via the paths given in /opt/stack/global-project/stack.yaml
     && fix-permissions /opt/IHaskell \
