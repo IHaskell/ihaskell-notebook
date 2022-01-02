@@ -1,4 +1,6 @@
-ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.2.5@sha256:fac61415bea84b7504d8b1e8d7b7ab2a2ea2fe8cf86d129f827cb43993b29ae0
+ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.0.16@sha256:21cd28169e3aee6fcc5613f9056c7efd8c4e6c521d1439b239e28ef5020a3c22
+# 2022-01-02 Revert back to Jupyter v3.0.16 because cells sometimes execute forever in v3.2.5
+# ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.2.5@sha256:fac61415bea84b7504d8b1e8d7b7ab2a2ea2fe8cf86d129f827cb43993b29ae0
 FROM $BASE_CONTAINER
 # https://hub.docker.com/r/jupyter/base-notebook/tags
 
@@ -137,6 +139,8 @@ RUN    cd /opt \
 # (ghc: internal error: Unable to commit 1048576 bytes of memory)
 #
 # https://success.docker.com/article/docker-hub-automated-build-fails-and-the-logs-are-missing-empty
+#
+# TODO We are no longer using Dockerhub, so remove the --jobs 1 flag?
 #
 # Build ghc-parser
 RUN    stack --jobs 1 build $STACK_ARGS ghc-parser \
