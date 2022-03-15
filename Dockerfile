@@ -1,4 +1,6 @@
 ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.0.16@sha256:21cd28169e3aee6fcc5613f9056c7efd8c4e6c521d1439b239e28ef5020a3c22
+# 2022-03-15 Revert back to Jupyter v3.0.16 because cells sometimes execute forever in v3.3.1
+# ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.3.1@sha256:1962f622203133252bb77b9fbfe7a99c8d2c037740360aa9b81f5a62c9990183
 # 2022-01-02 Revert back to Jupyter v3.0.16 because cells sometimes execute forever in v3.2.5
 # ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.2.5@sha256:fac61415bea84b7504d8b1e8d7b7ab2a2ea2fe8cf86d129f827cb43993b29ae0
 FROM $BASE_CONTAINER
@@ -63,7 +65,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 #
 #    curl -sSL https://get.haskellstack.org/ | sh
 #
-ARG STACK_VERSION="2.7.3"
+ARG STACK_VERSION="2.7.5"
 ARG STACK_BINDIST="stack-${STACK_VERSION}-linux-x86_64"
 RUN    cd /tmp \
     && curl -sSL --output ${STACK_BINDIST}.tar.gz https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/${STACK_BINDIST}.tar.gz \
@@ -105,14 +107,14 @@ ENV PATH ${PATH}:/opt/bin
 # The resolver for all stack builds will be chosen from
 # the IHaskell/stack.yaml in this commit.
 # https://github.com/gibiansky/IHaskell/commits/master
-# IHaskell 2021-12-25
-ARG IHASKELL_COMMIT=db8bd784344649be5c5bd072f23cdccb037d93a9
+# IHaskell 2022-03-02
+ARG IHASKELL_COMMIT=865df8c7fda0f5ee6af0a81e67690e1934e29ccf
 
 # Specify a git branch for hvega
 # https://github.com/DougBurke/hvega/commits/main
 # hvega 2021-12-30
-# hvega-0.12.0.0
-# ihaskell-hvega-0.4.0.0
+# hvega-0.12.0.2
+# ihaskell-hvega-0.5.0.2
 ARG HVEGA_COMMIT=10704fe4f43ef21d7daceaadfd8a25997840d7b8
 
 # Clone IHaskell and install ghc from the IHaskell resolver
