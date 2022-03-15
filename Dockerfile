@@ -221,8 +221,8 @@ RUN    mkdir -p $EXAMPLES_PATH \
     && cp /opt/IHaskell/ihaskell-display/ihaskell-charts/*.ipynb ihaskell-charts/ \
     && mkdir -p ihaskell-diagrams \
     && cp /opt/IHaskell/ihaskell-display/ihaskell-diagrams/*.ipynb ihaskell-diagrams/ \
-#    && mkdir -p ihaskell-gnuplot \
-#    && cp /opt/IHaskell/ihaskell-display/ihaskell-gnuplot/*.ipynb ihaskell-gnuplot/ \
+    && mkdir -p ihaskell-gnuplot \
+    && cp /opt/IHaskell/ihaskell-display/ihaskell-gnuplot/*.ipynb ihaskell-gnuplot/ \
     && mkdir -p ihaskell-widgets \
     && cp --recursive /opt/IHaskell/ihaskell-display/ihaskell-widgets/Examples/* ihaskell-widgets/ \
     && mkdir -p ihaskell-hvega \
