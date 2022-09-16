@@ -1,19 +1,19 @@
 # ihaskell-notebook
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jamesdbrock/learn-you-a-haskell-notebook/master?urlpath=lab/tree/ihaskell_examples/ihaskell/IHaskell.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/IHaskell/learn-you-a-haskell-notebook/master?urlpath=lab/tree/ihaskell_examples/ihaskell/IHaskell.ipynb)
 
-A [Community Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#community-stacks) image. Provides the Jupyter [IHaskell](https://github.com/gibiansky/IHaskell) kernel in a Docker image which composes well with other Jupyter Docker Stacks. Docker images are [published on the Github container registry.](https://github.com/jamesdbrock/ihaskell-notebook/pkgs/container/ihaskell-notebook)
+A [Community Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#community-stacks) image. Provides the Jupyter [IHaskell](https://github.com/gibiansky/IHaskell) kernel in a Docker image which composes well with other Jupyter Docker Stacks. Docker images are [published on the Github container registry.](https://github.com/IHaskell/ihaskell-notebook/pkgs/container/ihaskell-notebook)
 
 `docker run` the latest image right now with the following shell command, then open [http://localhost:8888](http://localhost:8888) to try out the Jupyter notebook. Your current working directory on your host computer will be mounted at __Home / pwd__ in JupyterLab.
 
 ```bash
-docker run --rm -p 8888:8888 -v $PWD:/home/jovyan/pwd --name ihaskell_notebook ghcr.io/jamesdbrock/ihaskell-notebook:master jupyter lab --LabApp.token=''
+docker run --rm -p 8888:8888 -v $PWD:/home/jovyan/pwd --name ihaskell_notebook ghcr.io/IHaskell/ihaskell-notebook:master jupyter lab --ServerApp.token=''
 ```
 
 Or with `podman`:
 
 ```bash
-podman run --privileged --userns=keep-id --rm -p 8888:8888 -v $PWD:/home/jovyan/pwd --name ihaskell_notebook ghcr.io/jamesdbrock/ihaskell-notebook:master jupyter lab --LabApp.token=''
+podman run --privileged --userns=keep-id --rm -p 8888:8888 -v $PWD:/home/jovyan/pwd --name ihaskell_notebook ghcr.io/IHaskell/ihaskell-notebook:master jupyter lab --ServerApp.token=''
 ```
 
 ## Image structure
@@ -26,13 +26,14 @@ This image includes:
 * Haskell libraries for instances of [IHaskell.Display](https://www.stackage.org/haddock/lts-12.26/ihaskell-0.9.1.0/IHaskell-Display.html)
   * __ihaskell-aeson__ for [Aeson](http://hackage.haskell.org/package/aeson) JSON display
   * __ihaskell-blaze__ for [Blaze](http://hackage.haskell.org/package/blaze-html) HTML display
-  * __ihaskell-gnuplot__ for [gnuplot](http://www.gnuplot.info/) display
+  * __ihaskell-gnuplot__ for [gnuplot](http://www.gnuplot.info/) graphing utility
   * __ihaskell-juicypixels__ for [JuicyPixels](http://hackage.haskell.org/package/JuicyPixels) image display
-  * __ihaskell-graphviz__ for [Graphviz](https://www.graphviz.org/) display
-  * __ihaskell-diagrams__ for [diagrams](https://archives.haskell.org/projects.haskell.org/diagrams/) display
-  * __ihaskell-charts__ for [Chart](https://github.com/timbod7/haskell-chart/wiki) display
-  * __ihaskell-hatex__ for [HaTeX](http://daniel-diaz.github.io/projects/hatex/hatex-guide.html) LaTeX display
-  * __ihaskell-widgets__ for [Widgets](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display/ihaskell-widgets) display
+  * __ihaskell-plot__ for [plots](https://hackage.haskell.org/package/plots) diagrams-based plotting library
+  * __ihaskell-graphviz__ for [Graphviz](https://www.graphviz.org/) graph visualization
+  * __ihaskell-diagrams__ for [diagrams](https://archives.haskell.org/projects.haskell.org/diagrams/) language for creating vector graphics
+  * __ihaskell-charts__ for [Chart](https://github.com/timbod7/haskell-chart/wiki) rendering 2D charts
+  * __ihaskell-hatex__ for [HaTeX](http://daniel-diaz.github.io/projects/hatex/hatex-guide.html) LaTeX
+  * __ihaskell-widgets__ for [Widgets](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display/ihaskell-widgets) interactive user-interface controls
   * [__DougBurke/ihaskell-hvega__](https://github.com/DougBurke/hvega) for [Vega/Vega-Lite rendering, natively supported by JupyterLab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html#vega-lite)
 * [__Haskell Stack__](https://docs.haskellstack.org/en/stable/README/) package manager, with [Glasgow Haskell Compiler](https://www.haskell.org/ghc/).
 
@@ -129,8 +130,8 @@ ident 3
 #### Installing Haskell packages caveats
 
 1. You can only install packages from the
-   [Stackage](https://www.stackage.org/) snapshot
-   from the Stack *global project* `/opt/stack/global-project/stack.yaml` `resolver`.
+   [Stackage](https://www.stackage.org/) snapshot from the Stack *global project*
+   [`/opt/stack/global-project/stack.yaml`](global-project.stack.yaml) `resolver`.
 2. The first time you run the notebook the packages will be installed, but
    then the kernel will not load them. You must <kbd>⭮</kbd> restart the
    kernel to load the newly-installed packages.
@@ -186,10 +187,11 @@ docker build --build-arg BASE_CONTAINER=jupyter/scipy-notebook --rm --force-rm -
 
 [IHaskell Wiki with Exemplary IHaskell Notebooks](https://github.com/gibiansky/IHaskell/wiki)
 
-[Learn You a Haskell for Great Good, Jupyter adaptation](https://github.com/jamesdbrock/learn-you-a-haskell-notebook)
+[Learn You a Haskell for Great Good, Jupyter adaptation](https://github.com/IHaskell/learn-you-a-haskell-notebook)
 
 [When Is Haskell More Useful Than R Or Python In Data Science?](https://www.quora.com/What-are-some-use-cases-for-which-it-would-be-beneficial-to-use-Haskell-rather-than-R-or-Python-in-data-science) by [Tikhon Jelvis](https://github.com/TikhonJelvis)
 
 [datahaskell.org](http://www.datahaskell.org/)
 
-This Docker image was made at [Cross Compass](https://www.cross-compass.com/) in Tokyo.
+[tweag/jupyterWith Jupyter Nix build](https://github.com/tweag/jupyterWith)
+

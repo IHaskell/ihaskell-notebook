@@ -1,7 +1,7 @@
 .PHONY: help build dev test test-env
 
 # Docker image name and tag
-IMAGE:=jamesdbrock/ihaskell-notebook
+IMAGE:=ihaskell/ihaskell-notebook
 TAG?=latest
 # Shell that make should use
 SHELL:=bash
@@ -30,7 +30,7 @@ test-env: ## Make a test environment by installing test dependencies with pip
 
 .PHONY: up
 up: ## Launch JupyterLab with token=x
-	$(DOCKER) run --rm -p 8888:8888 --name ihaskell_notebook $(IMAGE):$(TAG) jupyter lab --LabApp.token=''
+	$(DOCKER) run --rm -p 8888:8888 --name ihaskell_notebook $(IMAGE):$(TAG) jupyter lab --ServerApp.token=''
 
 .PHONY: build-fast
 build-fast: DARGS?=

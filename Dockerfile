@@ -1,8 +1,7 @@
-ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.0.16@sha256:21cd28169e3aee6fcc5613f9056c7efd8c4e6c521d1439b239e28ef5020a3c22
-# 2022-03-15 Revert back to Jupyter v3.0.16 because cells sometimes execute forever in v3.3.1
-# ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.3.1@sha256:1962f622203133252bb77b9fbfe7a99c8d2c037740360aa9b81f5a62c9990183
-# 2022-01-02 Revert back to Jupyter v3.0.16 because cells sometimes execute forever in v3.2.5
-# ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.2.5@sha256:fac61415bea84b7504d8b1e8d7b7ab2a2ea2fe8cf86d129f827cb43993b29ae0
+ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.1.17@sha256:4d30116ec280251db5553725fbccc23da7e6feafbbcbf6a4d3ae57c1088cd837
+# JupyterLab versions > 3.1.17 have this bug:
+# https://github.com/jupyterlab/jupyterlab/issues/13383
+
 FROM $BASE_CONTAINER
 # https://hub.docker.com/r/jupyter/base-notebook/tags
 
@@ -107,15 +106,15 @@ ENV PATH ${PATH}:/opt/bin
 # The resolver for all stack builds will be chosen from
 # the IHaskell/stack.yaml in this commit.
 # https://github.com/gibiansky/IHaskell/commits/master
-# IHaskell 2022-03-02
-ARG IHASKELL_COMMIT=865df8c7fda0f5ee6af0a81e67690e1934e29ccf
+# IHaskell 2022-11-01
+ARG IHASKELL_COMMIT=7d0b9b070aa821db1a4d38826e146fd2c41d1c0b
 
 # Specify a git branch for hvega
 # https://github.com/DougBurke/hvega/commits/main
-# hvega 2021-12-30
-# hvega-0.12.0.2
-# ihaskell-hvega-0.5.0.2
-ARG HVEGA_COMMIT=10704fe4f43ef21d7daceaadfd8a25997840d7b8
+# hvega 2022-06-16
+# hvega-0.12.0.3
+# ihaskell-hvega-0.5.0.3
+ARG HVEGA_COMMIT=2b453c230294b889564339853de02b0c1829a081
 
 # Clone IHaskell and install ghc from the IHaskell resolver
 RUN    cd /opt \
@@ -134,9 +133,10 @@ RUN    cd /opt \
     && rm /opt/stack/programs/x86_64-linux/ghc*.tar.xz
 
 # Build IHaskell
-RUN    stack build $STACK_ARGS ihaskell \
+#
 # Note that we are NOT in the /opt/IHaskell directory here, we are
 # installing ihaskell via the paths given in /opt/stack/global-project/stack.yaml
+RUN    stack build $STACK_ARGS ihaskell \
     && fix-permissions /opt/IHaskell \
     && fix-permissions $STACK_ROOT
 
@@ -151,14 +151,14 @@ RUN    stack build $STACK_ARGS ihaskell-aeson \
     && stack build $STACK_ARGS ihaskell-hatex \
     && stack build $STACK_ARGS ihaskell-juicypixels \
 #   && stack build $STACK_ARGS ihaskell-magic \
-#   && stack build $STACK_ARGS ihaskell-plot \
+    && stack build $STACK_ARGS ihaskell-plot \
 #   && stack build $STACK_ARGS ihaskell-rlangqq \
 #   && stack build $STACK_ARGS ihaskell-static-canvas \
     && stack build $STACK_ARGS ihaskell-widgets \
     && stack build $STACK_ARGS hvega \
     && stack build $STACK_ARGS ihaskell-hvega \
     && fix-permissions $STACK_ROOT \
-# Fix for https://github.com/jamesdbrock/ihaskell-notebook/issues/14#issuecomment-636334824
+# Fix for https://github.com/IHaskell/ihaskell-notebook/issues/14#issuecomment-636334824
     && fix-permissions /opt/IHaskell \
     && fix-permissions /opt/hvega
 
@@ -168,7 +168,7 @@ RUN    stack build $STACK_ARGS ihaskell-aeson \
 # Don't clean /opt/hvega
 # We can't actually figure out anything to cleanup.
 
-# Bug workaround for https://github.com/jamesdbrock/ihaskell-notebook/issues/9
+# Bug workaround for https://github.com/IHaskell/ihaskell-notebook/issues/9
 RUN mkdir -p /home/jovyan/.local/share/jupyter/runtime \
     && fix-permissions /home/jovyan/.local \
     && fix-permissions /home/jovyan/.local/share \
@@ -187,22 +187,25 @@ USER $NB_UID
 RUN \
 # Install the IHaskell kernel at /usr/local/share/jupyter/kernels, which is
 # in `jupyter --paths` data:
-       stack exec ihaskell -- install --stack --prefix=/usr/local \
-# Install the ihaskell_labextension for JupyterLab syntax highlighting
-    && npm install -g typescript \
-    && cd /opt/IHaskell/jupyterlab-ihaskell \
-    && npm install \
-    && npm run build \
-    && jupyter labextension install . \
-# Cleanup
-    && npm cache clean --force \
-    && rm -rf /home/$NB_USER/.cache/yarn \
-# Clean jupyterlab-ihaskell/node_nodemodules, 86MB
-    && rm -rf /opt/IHaskell/jupyterlab-ihaskell/node_modules
+       stack exec ihaskell -- install --stack --prefix=/usr/local
+
+# # We don't need to install the ihaskell_labextension for JupyterLab syntax highlighting
+# # https://github.com/IHaskell/IHaskell/issues/1238#issuecomment-907658217
+#     && npm install -g typescript \
+#     && cd /opt/IHaskell/jupyterlab-ihaskell \
+#     && npm install \
+#     && npm run build \
+#     && jupyter labextension install . \
+# # Cleanup
+#     && npm cache clean --force \
+#     && rm -rf /home/$NB_USER/.cache/yarn \
+# # Clean jupyterlab-ihaskell/node_nodemodules, 86MB
+#     && rm -rf /opt/IHaskell/jupyterlab-ihaskell/node_modules
 
 RUN conda install --quiet --yes \
 # ihaskell-widgets needs ipywidgets
-    'ipywidgets' && \
+# https://github.com/IHaskell/IHaskell/issues/1380
+    'ipywidgets=7.7.1' && \
 # ihaskell-hvega doesn't need an extension. https://github.com/jupyterlab/jupyter-renderers
 #    'jupyterlab-vega3' && \
     conda clean --all -f -y && \
@@ -230,5 +233,7 @@ RUN    mkdir -p $EXAMPLES_PATH \
     && mkdir -p ihaskell-hvega \
     && cp /opt/hvega/notebooks/*.ipynb ihaskell-hvega/ \
     && cp /opt/hvega/notebooks/*.tsv ihaskell-hvega/ \
+    && mkdir -p ihaskell-plot \
+    && cp /opt/IHaskell/ihaskell-display/ihaskell-plot/PlotExample.ipynb ihaskell-plot/ \
     && fix-permissions $EXAMPLES_PATH
 
