@@ -2,7 +2,7 @@
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/IHaskell/learn-you-a-haskell-notebook/master?urlpath=lab/tree/ihaskell_examples/ihaskell/IHaskell.ipynb)
 
-A [Community Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#community-stacks) image. Provides the Jupyter [IHaskell](https://github.com/gibiansky/IHaskell) kernel in a Docker image which composes well with other Jupyter Docker Stacks. Docker images are [published on the Github container registry.](https://github.com/IHaskell/ihaskell-notebook/pkgs/container/ihaskell-notebook)
+A [Community Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#community-stacks) image. Provides the Jupyter [IHaskell](https://github.com/IHaskell/IHaskell) kernel in a Docker image which composes well with other Jupyter Docker Stacks. Docker images are [published on the Github container registry.](https://github.com/IHaskell/ihaskell-notebook/pkgs/container/ihaskell-notebook)
 
 `docker run` the latest image right now with the following shell command, then open [http://localhost:8888](http://localhost:8888) to try out the Jupyter notebook. Your current working directory on your host computer will be mounted at __Home / pwd__ in JupyterLab.
 
@@ -21,8 +21,8 @@ podman run --privileged --userns=keep-id --rm -p 8888:8888 -v $PWD:/home/jovyan/
 This image includes:
 
 * [__JupyterLab 3__](https://jupyterlab.readthedocs.io/en/stable/)
-* [__IHaskell__](https://github.com/gibiansky/IHaskell) Jupyter kernel
-* [__jupyterlab-ihaskell__](https://github.com/gibiansky/IHaskell/tree/master/jupyterlab-ihaskell) JupyterLab extension for Haskell syntax highlighting in notebooks
+* [__IHaskell__](https://github.com/IHaskell/IHaskell) Jupyter kernel
+* [__jupyterlab-ihaskell__](https://github.com/IHaskell/IHaskell/tree/master/jupyterlab-ihaskell) JupyterLab extension for Haskell syntax highlighting in notebooks
 * Haskell libraries for instances of [IHaskell.Display](https://www.stackage.org/haddock/lts-12.26/ihaskell-0.9.1.0/IHaskell-Display.html)
   * __ihaskell-aeson__ for [Aeson](http://hackage.haskell.org/package/aeson) JSON display
   * __ihaskell-blaze__ for [Blaze](http://hackage.haskell.org/package/blaze-html) HTML display
@@ -33,7 +33,7 @@ This image includes:
   * __ihaskell-diagrams__ for [diagrams](https://archives.haskell.org/projects.haskell.org/diagrams/) language for creating vector graphics
   * __ihaskell-charts__ for [Chart](https://github.com/timbod7/haskell-chart/wiki) rendering 2D charts
   * __ihaskell-hatex__ for [HaTeX](http://daniel-diaz.github.io/projects/hatex/hatex-guide.html) LaTeX
-  * __ihaskell-widgets__ for [Widgets](https://github.com/gibiansky/IHaskell/tree/master/ihaskell-display/ihaskell-widgets) interactive user-interface controls
+  * __ihaskell-widgets__ for [Widgets](https://github.com/IHaskell/IHaskell/tree/master/ihaskell-display/ihaskell-widgets) interactive user-interface controls
   * [__DougBurke/ihaskell-hvega__](https://github.com/DougBurke/hvega) for [Vega/Vega-Lite rendering, natively supported by JupyterLab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html#vega-lite)
 * [__Haskell Stack__](https://docs.haskellstack.org/en/stable/README/) package manager, with [Glasgow Haskell Compiler](https://www.haskell.org/ghc/).
 
