@@ -1,5 +1,6 @@
-ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.1.17@sha256:4d30116ec280251db5553725fbccc23da7e6feafbbcbf6a4d3ae57c1088cd837
-# JupyterLab versions > 3.1.17 have this bug:
+ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.2.4@sha256:438e87954dedd8b3c0088c89923ed29c9e14f139428c98d79c9ebabe55adc01d
+
+# JupyterLab versions > 3.2.4 have this bug:
 # https://github.com/jupyterlab/jupyterlab/issues/13383
 
 FROM $BASE_CONTAINER
@@ -64,7 +65,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 #
 #    curl -sSL https://get.haskellstack.org/ | sh
 #
-ARG STACK_VERSION="2.7.5"
+ARG STACK_VERSION="2.9.1"
 ARG STACK_BINDIST="stack-${STACK_VERSION}-linux-x86_64"
 RUN    cd /tmp \
     && curl -sSL --output ${STACK_BINDIST}.tar.gz https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/${STACK_BINDIST}.tar.gz \
@@ -106,8 +107,8 @@ ENV PATH ${PATH}:/opt/bin
 # The resolver for all stack builds will be chosen from
 # the IHaskell/stack.yaml in this commit.
 # https://github.com/gibiansky/IHaskell/commits/master
-# IHaskell 2022-11-01
-ARG IHASKELL_COMMIT=7d0b9b070aa821db1a4d38826e146fd2c41d1c0b
+# IHaskell 2022-12-19
+ARG IHASKELL_COMMIT=1c22a874ac0c8ed019229f4a0cd5a0bfda017357
 
 # Specify a git branch for hvega
 # https://github.com/DougBurke/hvega/commits/main
@@ -122,8 +123,6 @@ RUN    cd /opt \
     && mv *IHaskell* IHaskell \
     && curl -L "https://github.com/DougBurke/hvega/tarball/$HVEGA_COMMIT" | tar xzf - \
     && mv *hvega* hvega \
-# Copy the Stack global project resolver from the IHaskell resolver.
-    && grep 'resolver:' /opt/IHaskell/stack.yaml >> $STACK_ROOT/global-project/stack.yaml \
     && fix-permissions /opt/IHaskell \
     && fix-permissions $STACK_ROOT \
     && fix-permissions /opt/hvega \
@@ -236,4 +235,11 @@ RUN    mkdir -p $EXAMPLES_PATH \
     && mkdir -p ihaskell-plot \
     && cp /opt/IHaskell/ihaskell-display/ihaskell-plot/PlotExample.ipynb ihaskell-plot/ \
     && fix-permissions $EXAMPLES_PATH
+
+# Enable this for debugging the kernel messages
+# RUN conda install --quiet --yes \
+#     'jupyterlab-kernelspy' && \
+#     conda clean --all -f -y && \
+#     fix-permissions "${CONDA_DIR}" && \
+#     fix-permissions "/home/${NB_USER}"
 
