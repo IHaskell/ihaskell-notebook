@@ -123,8 +123,6 @@ RUN    cd /opt \
     && mv *IHaskell* IHaskell \
     && curl -L "https://github.com/DougBurke/hvega/tarball/$HVEGA_COMMIT" | tar xzf - \
     && mv *hvega* hvega \
-# Copy the Stack global project resolver from the IHaskell resolver.
-    && grep 'resolver:' /opt/IHaskell/stack.yaml >> $STACK_ROOT/global-project/stack.yaml \
     && fix-permissions /opt/IHaskell \
     && fix-permissions $STACK_ROOT \
     && fix-permissions /opt/hvega \
