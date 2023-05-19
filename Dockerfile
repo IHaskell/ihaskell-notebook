@@ -65,7 +65,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 #
 #    curl -sSL https://get.haskellstack.org/ | sh
 #
-ARG STACK_VERSION="2.9.1"
+ARG STACK_VERSION="2.11.1"
 ARG STACK_BINDIST="stack-${STACK_VERSION}-linux-x86_64"
 RUN    cd /tmp \
     && curl -sSL --output ${STACK_BINDIST}.tar.gz https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/${STACK_BINDIST}.tar.gz \
