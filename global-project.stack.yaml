@@ -1,5 +1,5 @@
-resolver: nightly-2023-05-17
-# GHC 9.4.5
+resolver: lts-23.21
+# GHC 9.8.4
 
 # Stack global project /opt/stack/global-project/stack.yaml in the Docker image.
 # https://docs.haskellstack.org/en/stable/yaml_configuration/#yaml-configuration
@@ -37,11 +37,11 @@ extra-deps:
 - /opt/hvega/hvega
 - /opt/hvega/ihaskell-hvega
 
-- Chart-cairo-1.9.3
-- cairo-0.13.10.0
-- diagrams-cairo-1.4.2
-- pango-0.13.10.0
-- glib-0.13.10.0
-- gtk2hs-buildtools-0.13.10.0
-- plot-0.2.3.11
+- Chart-cairo-1.9.4.1
+- cairo-0.13.12.0
+- diagrams-cairo-1.4.2.1
+- pango-0.13.12.0
+- glib-0.13.12.0
+- gtk2hs-buildtools-0.13.12.0
+- plot-0.2.3.12
 

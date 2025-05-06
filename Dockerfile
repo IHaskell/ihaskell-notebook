@@ -1,10 +1,8 @@
-ARG BASE_CONTAINER=jupyter/base-notebook:lab-3.2.4@sha256:438e87954dedd8b3c0088c89923ed29c9e14f139428c98d79c9ebabe55adc01d
-
-# JupyterLab versions > 3.2.4 have this bug:
-# https://github.com/jupyterlab/jupyterlab/issues/13383
-
+# https://quay.io/repository/jupyter/base-notebook
+# lab-4.4.1
+ARG BASE_CONTAINER=quay.io/jupyter/base-notebook:x86_64-lab-4.4.1
+# ARG BASE_CONTAINER=quay.io/jupyter/base-notebook/x86_64-lab-4.4.1@sha256:af7a4d3476399b0f772caad841c5b07b0143e7b9ecf26712f4e17ae687d9e6d2
 FROM $BASE_CONTAINER
-# https://hub.docker.com/r/jupyter/base-notebook/tags
 
 LABEL maintainer="James Brock <jamesbrock@gmail.com>"
 
@@ -65,7 +63,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 #
 #    curl -sSL https://get.haskellstack.org/ | sh
 #
-ARG STACK_VERSION="2.11.1"
+ARG STACK_VERSION="3.5.1"
 ARG STACK_BINDIST="stack-${STACK_VERSION}-linux-x86_64"
 RUN    cd /tmp \
     && curl -sSL --output ${STACK_BINDIST}.tar.gz https://github.com/commercialhaskell/stack/releases/download/v${STACK_VERSION}/${STACK_BINDIST}.tar.gz \
@@ -107,15 +105,15 @@ ENV PATH ${PATH}:/opt/bin
 # The resolver for all stack builds will be chosen from
 # the IHaskell/stack.yaml in this commit.
 # https://github.com/gibiansky/IHaskell/commits/master
-# IHaskell 2022-12-19
-ARG IHASKELL_COMMIT=1c22a874ac0c8ed019229f4a0cd5a0bfda017357
+# IHaskell 2025-05-04
+ARG IHASKELL_COMMIT=08686e821f93fde0bcecf82b9febc4135b22bb8a
 
 # Specify a git branch for hvega
 # https://github.com/DougBurke/hvega/commits/main
-# hvega 2022-06-16
-# hvega-0.12.0.3
-# ihaskell-hvega-0.5.0.3
-ARG HVEGA_COMMIT=2b453c230294b889564339853de02b0c1829a081
+# hvega 2025-03-12
+# hvega-0.12.0.7
+# ihaskell-hvega-0.5.0.6
+ARG HVEGA_COMMIT=5e18d53b7748dc5e23c6cd6c38dc722f01e2dde6
 
 # Clone IHaskell and install ghc from the IHaskell resolver
 RUN    cd /opt \
@@ -127,9 +125,9 @@ RUN    cd /opt \
     && fix-permissions $STACK_ROOT \
     && fix-permissions /opt/hvega \
     && stack setup \
-    && fix-permissions $STACK_ROOT \
+    && fix-permissions $STACK_ROOT
 # Clean 176MB
-    && rm /opt/stack/programs/x86_64-linux/ghc*.tar.xz
+    # && rm /opt/stack/programs/x86_64-linux/ghc*.tar.xz
 
 # Build IHaskell
 #
@@ -203,8 +201,7 @@ RUN \
 
 RUN conda install --quiet --yes \
 # ihaskell-widgets needs ipywidgets
-# https://github.com/IHaskell/IHaskell/issues/1380
-    'ipywidgets=7.7.1' && \
+    'ipywidgets=8.1.7' && \
 # ihaskell-hvega doesn't need an extension. https://github.com/jupyterlab/jupyter-renderers
 #    'jupyterlab-vega3' && \
     conda clean --all -f -y && \
