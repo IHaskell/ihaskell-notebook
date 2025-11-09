@@ -1,7 +1,6 @@
 # https://quay.io/repository/jupyter/base-notebook
-# lab-4.4.1
-ARG BASE_CONTAINER=quay.io/jupyter/base-notebook:x86_64-lab-4.4.1
-# ARG BASE_CONTAINER=quay.io/jupyter/base-notebook/x86_64-lab-4.4.1@sha256:af7a4d3476399b0f772caad841c5b07b0143e7b9ecf26712f4e17ae687d9e6d2
+# x86_64-lab-4.4.10
+ARG BASE_CONTAINER=quay.io/jupyter/base-notebook@sha256:2696c38269f400d51b9be613c7086806fa9615afbbad5a24449e3243b933a13c
 FROM $BASE_CONTAINER
 
 LABEL maintainer="James Brock <jamesbrock@gmail.com>"
@@ -105,8 +104,8 @@ ENV PATH ${PATH}:/opt/bin
 # The resolver for all stack builds will be chosen from
 # the IHaskell/stack.yaml in this commit.
 # https://github.com/gibiansky/IHaskell/commits/master
-# IHaskell 2025-05-04
-ARG IHASKELL_COMMIT=08686e821f93fde0bcecf82b9febc4135b22bb8a
+# IHaskell 2025-11-06
+ARG IHASKELL_COMMIT=70d25a03c5a76730ee454a99c4ea04ae7f539391
 
 # Specify a git branch for hvega
 # https://github.com/DougBurke/hvega/commits/main
